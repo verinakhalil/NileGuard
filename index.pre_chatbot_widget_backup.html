@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NileGuard — المنظومة الوطنية للإنذار المبكر بمخاطر الجفاف</title>
+    <meta name="description" content="منظومة وطنية ذكية للإنذار المبكر بموجات الجفاف عبر حوض النيل وصعيد مصر لدعم استدامة الموارد المائية وحماية الأمن الغذائي.">
+    
+    <!-- Google Fonts: Fraunces (Serif), Archivo (Sans-Serif), IBM Plex Mono, Cairo (Arabic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for Satellite Earth Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Main Stylesheet with cache busting -->
+    <link rel="stylesheet" href="styles.css?v=6.0">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/nileguard_logo.jpg">
+    
+    <!-- Chart.js & Leaflet JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+    <!-- ========================================================= -->
+    <!-- TOP APP HEADER NAVBAR WITH TABS                           -->
+    <!-- ========================================================= -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <img src="assets/nileguard_logo.jpg" alt="NileGuard Official Logo" class="app-logo" style="width: 62px; height: 62px; border-radius: 50%; border: 2.5px solid var(--gold); object-fit: cover; box-shadow: 0 4px 16px rgba(179, 128, 50, 0.35); transition: transform 0.25s ease;">
+                <div class="app-branding">
+                    <h1 style="display: flex; align-items: center; gap: 0.5rem; margin: 0; font-size: 1.45rem; font-weight: 800;">
+                        <span>NileGuard</span>
+                        <img src="assets/egypt_flag.svg" alt="علم مصر" title="جمهورية مصر العربية" style="width: 24px; height: 16px; border-radius: 3px; box-shadow: 0 1px 5px rgba(0,0,0,0.25);">
+                    </h1>
+                    <p id="app-slogan-header" style="font-size: 0.76rem; color: var(--gold); font-weight: 700; margin-top: 0.15rem; letter-spacing: -0.2px;">
+                        نستبق الجفاف.. لأمان النيل ونماء الأرض
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dedicated Main Tab Navigation Bar with Live Glowing Badges -->
+            <nav class="header-nav main-tabs-bar" id="main-tabs-nav">
+                <button class="tab-btn active" data-tab="tab-dashboard" id="btn-tab-dash">
+                    <span>🛰️ لوحة التنبؤ والخريطة</span>
+                    <span class="tab-badge badge-live">● LIVE</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-trajectory" id="btn-tab-traj">
+                    <span>📈 المسار الزمني</span>
+                    <span class="tab-badge badge-mono">1958-2021</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-crops" id="btn-tab-crops">
+                    <span>🌾 المرشد والذكاء الاصطناعي</span>
+                    <span class="tab-badge badge-ai">✨ AI</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-roi" id="btn-tab-roi">
+                    <span>💧 حاسبة الوفر المائي</span>
+                    <span class="tab-badge badge-water">💧 ROI</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-about" id="btn-tab-about">
+                    <span>🏛️ عن المبادرة وأهداف التنمية</span>
+                    <span class="tab-badge badge-mono">SDGs</span>
+                </button>
+            </nav>
+
+            <div class="header-right">
+                <div class="sync-status">
+                    <span class="sync-dot"></span>
+                    <span id="sync-text">ONLINE</span>
+                </div>
+                <button id="btn-lang-toggle" class="btn-lang">
+                    <span id="lang-label">English</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- TAB CONTENT ROOT CONTAINER                                -->
+    <!-- ========================================================= -->
+    <div class="tab-content-container">
+
+        <!-- ===================================================== -->
+        <!-- TAB 1: 🛰️ SATELLITE MAP & INFERENCE DASHBOARD         -->
+        <!-- ===================================================== -->
+        <div class="tab-pane active" id="tab-dashboard">
+            <main class="dashboard-wrapper">
+                
+                <!-- 1. TOP HORIZONTAL QUERY CONSOLE CONTROL BAR -->
+                <div class="query-console-topbar">
+                    <div class="topbar-left">
+                        <div class="console-header">
+                            <p class="label-caps" style="margin: 0; color: var(--gold-dim);">Query console</p>
+                            <h2 id="txt-forecast-params" style="margin: 0; font-size: 1.05rem; color: #ffffff;">Forecast parameters</h2>
+                        </div>
+                        
+                        <!-- Date Range Selector -->
+                        <div class="topbar-date-select">
+                            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="label-caps" style="color: var(--forest-muted); font-size: 0.65rem; white-space: nowrap;" id="txt-forecast-month">📅 Horizon:</span>
+                                <select id="select-horizon-month" class="console-select-box" style="padding: 0.45rem 0.8rem; font-size: 0.82rem; min-width: 170px;">
+                                    <option value="1">Month +1 (Jan 2021)</option>
+                                    <option value="2">Month +2 (Feb 2021)</option>
+                                    <option value="3">Month +3 (Mar 2021)</option>
+                                    <option value="4">Month +4 (Apr 2021)</option>
+                                    <option value="5">Month +5 (May 2021)</option>
+                                    <option value="6" selected>Month +6 (Jun 2021)</option>
+                                    <option value="7">Month +7 (Jul 2021)</option>
+                                    <option value="8">Month +8 (Aug 2021)</option>
+                                    <option value="9">Month +9 (Sep 2021)</option>
+                                    <option value="10">Month +10 (Oct 2021)</option>
+                                    <option value="11">Month +11 (Nov 2021)</option>
+                                    <option value="12">Month +12 (Dec 2021)</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Governorates Quick Filter Chips in Horizontal Strip -->
+                    <div class="topbar-govs-strip">
+                        <div class="gov-section-header" style="margin-bottom: 0.3rem;">
+                            <span class="label-caps" style="color: var(--gold-dim); font-size: 0.65rem;" id="txt-govs-title">📍 Governorates:</span>
+                            <div class="gov-toggle-links">
+                                <a href="javascript:void(0)" id="btn-select-all">All</a> / 
+                                <a href="javascript:void(0)" id="btn-select-none">None</a>
+                            </div>
+                        </div>
+                        <div class="gov-chips-horizontal" id="gov-chips-container">
+                            <button class="gov-chip" data-gov="Fayoum">Fayoum</button>
+                            <button class="gov-chip" data-gov="BeniSuef">Beni Suef</button>
+                            <button class="gov-chip" data-gov="Minya">Minya</button>
+                            <button class="gov-chip active" data-gov="Asyut">Asyut</button>
+                            <button class="gov-chip" data-gov="Sohag">Sohag</button>
+                            <button class="gov-chip" data-gov="Qena">Qena</button>
+                            <button class="gov-chip" data-gov="Luxor">Luxor</button>
+                            <button class="gov-chip" data-gov="Aswan">Aswan</button>
+                        </div>
+                    </div>
+
+                    <!-- Action Inference Button -->
+                    <div class="topbar-action">
+                        <button id="btn-run-sim" class="btn-inference">
+                            <span id="btn-sim-text">...Running inference</span>
+                            <span>⚡</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. METRICS STRIP: SELECTED GOVERNORATE + PDSI FORECAST -->
+                <div class="metrics-strip-grid">
+                    <!-- Metric 1: Selected Governorate with Mini Weather Strip -->
+                    <div class="panel metric-box">
+                        <div class="metric-header">
+                            <span class="label-caps">Selected governorate</span>
+                            <span style="font-size: 1.1rem;">🗺️</span>
+                        </div>
+                        <div class="metric-value-row">
+                            <span id="val-gov">Asyut</span>
+                            <span id="val-gov-ar" style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--gold); font-weight: 700;">أسيوط</span>
+                        </div>
+                        <div class="metric-note" id="note-gov">Middle Upper Egypt · 27.18° N, 31.18° E</div>
+                        
+                        <!-- Dynamic Weather & Climate Strip -->
+                        <div class="gov-weather-strip" id="gov-weather-strip">
+                            <span class="weather-chip" id="disp-temp">🌡️ 39°C حرارة صيفية</span>
+                            <span class="weather-chip" id="disp-wind">💨 رياح 14 كم/س</span>
+                            <span class="weather-chip" id="disp-et0" style="color: var(--severity-severe); font-weight: 700;">☀️ بخر عالي (8.2 مم/يوم)</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 2: PDSI Forecast -->
+                    <div class="panel metric-box">
+                        <div class="metric-header">
+                            <span class="label-caps">PDSI Forecast (Palmer Index)</span>
+                            <span style="font-size: 1.1rem;">📉</span>
+                        </div>
+                        <div class="metric-value-row">
+                            <span id="val-pdsi" style="direction: ltr; unicode-bidi: embed;">-1.78</span>
+                            <span class="metric-unit">Palmer</span>
+                        </div>
+                        <div class="metric-note" id="note-pdsi" style="color: var(--severity-severe); font-weight: 700;">Moderate deficit ahead</div>
+                    </div>
+                </div>
+
+                <!-- 3. CENTER SPLIT GRID: SATELLITE MAP (LEFT) & RANKED RISK TABLE (RIGHT) -->
+                <div class="center-split-grid">
+                    
+                    <!-- Left: Spatial Layer (Satellite Map & 4D Player) -->
+                    <div class="panel spatial-panel">
+                        <div>
+                            <div class="spatial-header">
+                                <div class="spatial-title">
+                                    <span class="label-caps">Spatial layer</span>
+                                    <h2 id="txt-spatial-title">Drought severity — Arab Republic of Egypt</h2>
+                                </div>
+                                <div class="severity-legend">
+                                    <div class="legend-item"><span class="legend-dot dot-wet"></span> Wet</div>
+                                    <div class="legend-item"><span class="legend-dot dot-normal"></span> Normal</div>
+                                    <div class="legend-item"><span class="legend-dot dot-mild"></span> Mild</div>
+                                    <div class="legend-item"><span class="legend-dot dot-moderate"></span> Moderate</div>
+                                    <div class="legend-item"><span class="legend-dot dot-severe"></span> Severe</div>
+                                    <div class="legend-item"><span class="legend-dot dot-extreme"></span> Extreme</div>
+                                </div>
+                            </div>
+
+                            <!-- 4D Time Player Toolbar -->
+                            <div class="time-player-toolbar">
+                                <button id="btn-play-sim" class="btn-player-play">
+                                    <span id="player-icon">▶</span>
+                                    <span id="player-label">4D Simulation</span>
+                                </button>
+                                <div class="player-slider-wrapper">
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.68rem; font-family: var(--font-mono); color: var(--forest-muted);">
+                                        <span id="disp-player-month">Horizon: Month +6 (1 Jun 2021)</span>
+                                        <span>1M .. 12M</span>
+                                    </div>
+                                    <input type="range" id="player-range" min="1" max="12" value="6" class="player-range-slider">
+                                </div>
+                                <div class="player-speed-chips">
+                                    <span class="speed-chip active" data-speed="1000">1x</span>
+                                    <span class="speed-chip" data-speed="500">2x</span>
+                                    <span class="speed-chip" data-speed="250">4x</span>
+                                </div>
+                            </div>
+
+                            <!-- Satellite Map Container with Basemap Switcher -->
+                            <div class="map-viewport">
+                                <div id="satelliteMap"></div>
+                                
+                                <!-- Interactive Basemap Switcher -->
+                                <div class="map-basemap-switcher">
+                                    <button class="btn-basemap active" data-basemap="satellite" id="btn-base-sat">🛰️ قمر صناعي</button>
+                                    <button class="btn-basemap" data-basemap="terrain" id="btn-base-terrain">🗺️ تضاريس</button>
+                                    <button class="btn-basemap" data-basemap="dark" id="btn-base-dark">🌙 داكن</button>
+                                </div>
+
+                                <div class="map-gradient-overlay">
+                                    <div class="gradient-title">Drought Severity</div>
+                                    <div class="gradient-bar"></div>
+                                    <div class="gradient-labels">
+                                        <span>Severe</span>
+                                        <span>Low</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Map Meta Footer -->
+                        <div class="map-meta-footer">
+                            <span>Satellite imagery basemap · Esri World Imagery</span>
+                            <span>Marker radius ∝ |PDSI| magnitude</span>
+                            <span id="map-selected-label">Selected: Asyut</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Ranked Risk (Inference Table) -->
+                    <div class="panel ranked-risk-panel">
+                        <div>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <span class="label-caps">Inference table</span>
+                                <span class="label-caps" style="background: rgba(179, 128, 50, 0.1); color: var(--gold); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-weight: 700;">8 Stations</span>
+                            </div>
+                            <h2 id="txt-ranked-title" style="margin-top: 0.3rem; margin-bottom: 0.8rem;">Ranked risk</h2>
+
+                            <table class="ranked-table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;" id="th-gov">Governorate</th>
+                                        <th style="text-align: right;">PDSI</th>
+                                        <th style="text-align: right;">Conf.</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ranked-tbody">
+                                    <!-- Populated dynamically by app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Footer Summary Strip -->
+                        <div class="ranked-meta-footer" style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-subtle); font-size: 0.74rem; color: var(--text-muted); font-family: var(--font-mono);">
+                            <span>📍 مرتبة حسب شدة الجفاف</span>
+                            <span style="color: var(--forest-bg); font-weight: 700;">دقة R² = 0.760</span>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- TAB 2: 📈 TIME SERIES TRAJECTORY FORECAST             -->
+        <!-- ===================================================== -->
+        <div class="tab-pane" id="tab-trajectory">
+            <div class="secondary-modules-container" style="margin-top: 1.5rem;">
+                <div class="panel chart-panel">
+                    <div class="chart-panel-header">
+                        <div>
+                            <span class="label-caps">Time Series Trajectory</span>
+                            <h3 id="txt-chart-title">Asyut — PDSI Drought Trajectory & ConvLSTM Forecast</h3>
+                        </div>
+                        <div class="legend-item font-mono" style="font-size: 0.76rem;">
+                            <span style="color: #2d7f9d; font-weight: 700;">■ Observed (1958–2020)</span> &nbsp;|&nbsp; 
+                            <span style="color: #ea580c; font-weight: 700;">■ ConvLSTM Forecast (95% CI)</span>
+                        </div>
+                    </div>
+                    <div class="canvas-container" style="height: 480px;">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- TAB 3: 🌾 SMART CROP ADVISOR & AI CHATBOT             -->
+        <!-- ===================================================== -->
+        <div class="tab-pane" id="tab-crops">
+            <div class="secondary-modules-container" style="margin-top: 1.5rem;">
+                <div class="panel crops-section-panel" id="crops-section">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <span class="label-caps">Smart Crop Intelligence</span>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700;" id="txt-crop-advisor-title">
+                                🌾 المرشد الزراعي الذكي — المحاصيل المقاومة للجفاف في أسيوط
+                            </h3>
+                            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.3rem;" id="txt-crop-advisor-desc">
+                                توصيات زراعية ذكية موجهة للمزارعين ومهندسي الري مبنية على مؤشر الجفاف المتوقع (-1.82 Palmer)
+                            </p>
+                        </div>
+                        <span class="label-caps" id="crop-count-badge" style="background: rgba(179, 128, 50, 0.1); color: var(--gold); border: 1.5px solid var(--gold); padding: 0.4rem 1rem; border-radius: var(--radius-full); font-weight: 700;">
+                            4 Recommended Crops
+                        </span>
+                    </div>
+
+                    <!-- Dynamic Crop Cards -->
+                    <div class="crops-grid-display" id="crops-grid">
+                        <!-- Dynamically generated by app.js -->
+                    </div>
+
+                    <!-- Interactive AI LLM Agricultural Chat Assistant -->
+                    <div class="panel" style="margin-top: 2rem; padding: 1.8rem; background: var(--bg-parchment); border: 1px solid var(--border-color);" id="chat-section">
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.2rem;">
+                            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                <span style="font-size: 1.8rem;">🤖</span>
+                                <div>
+                                    <h4 style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--text-dark);" id="chat-title">
+                                        المساعد الزراعي الذكي المباشر (Powered by Gemini Agronomic AI Engine)
+                                    </h4>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.15rem;">
+                                        استشر الذكاء الاصطناعي التوليدي في أي تساؤل عن مواعيد الزراعة، كميات الري، وتوصيات المحافظة
+                                    </p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="label-caps" style="background: rgba(22, 163, 74, 0.12); color: #16a34a; border: 1px solid rgba(22, 163, 74, 0.3); padding: 0.3rem 0.8rem; border-radius: var(--radius-full); font-weight: 700;">
+                                    ● Gemini LLM Active
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Quick Prompt Chips -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.2rem;">
+                            <button class="chat-chip" data-prompt="ما هي أفضل أصناف القمح المقاومة للجفاف في محافظة أسيوط؟">
+                                🌾 أفضل أصناف القمح المقاومة للجفاف؟
+                            </button>
+                            <button class="chat-chip" data-prompt="كيف أتعامل مع نقص مياه الري في الصعيد خلال الصيف؟">
+                                💧 التعامل مع نقص مياه الري؟
+                            </button>
+                            <button class="chat-chip" data-prompt="ما هي مواعيد وطرق ري الرمان المنفلوطي في أسيوط؟">
+                                🍎 ري وزراعة الرمان بأسيوط؟
+                            </button>
+                            <button class="chat-chip" data-prompt="ما هو البديل الموفر للمياه لقصب السكر في الأقصر وقنا؟">
+                                🥔 بدائل قصب السكر الموفرة؟
+                            </button>
+                        </div>
+
+                        <!-- Messages Log -->
+                        <div class="chat-messages" id="chat-messages" style="max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.2rem; padding: 0.8rem; background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius);">
+                            <div class="chat-msg msg-ai" style="display: flex; gap: 0.6rem;">
+                                <div style="font-size: 1.3rem;">🌾</div>
+                                <div style="background: var(--bg-parchment); border: 1px solid var(--border-color); padding: 0.8rem 1rem; border-radius: var(--radius); font-size: 0.9rem; line-height: 1.6;">
+                                    أهلاً بك! أنا مستشارك الزراعي الذكي لمنظومة <strong>NileGuard</strong>. يمكنك سؤالي عن أنسب المحاصيل للمحافظة المحددة حالياً، أو استفسارات الري والتسميد وتأثير مؤشر الجفاف على أراضيك الزراعية. كيف يمكنني مساعدتك؟
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Input Form -->
+                        <form id="chat-form" style="display: flex; gap: 0.6rem;">
+                            <input type="text" id="chat-input" class="calc-select" style="flex: 1; font-size: 0.92rem; min-height: 48px;" placeholder="اكتب سؤالك الزراعي هنا (مثال: متى أزرع الرمان في أسيوط وكيف أرويه؟)..." required autocomplete="off">
+                            <button type="submit" class="btn-player-play" style="padding: 0.6rem 1.6rem; font-size: 0.92rem;">
+                                <span>إرسال 🚀</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- TAB 4: 💧 AGRI-ROI CALCULATOR & EXECUTIVE BULLETIN    -->
+        <!-- ===================================================== -->
+        <div class="tab-pane" id="tab-roi">
+            <div class="secondary-modules-container" style="margin-top: 1.5rem;">
+                
+                <!-- 2. SMART AGRI-WATER & ECONOMIC ROI CALCULATOR -->
+                <div class="panel roi-calculator-panel" id="roi-calculator-section">
+                    <div class="calc-header-row">
+                        <div>
+                            <span class="label-caps">Economic & Agronomic Intelligence</span>
+                            <h3 class="calc-title" id="txt-calc-title">💧 حاسبة الوفر المائي والجدوى الاقتصادية للفلاح المصري (Agri-ROI Calculator)</h3>
+                            <p class="calc-subtitle" id="txt-calc-desc">احسب كمية المياه الموفرة سنوياً والعائد المالي المحقق عند تطبيق المقننات المائية المعتمدة وتوجيهات NileGuard الذكية</p>
+                        </div>
+                        <button class="btn-voice-brief" id="btn-voice-brief" title="Listen to AI Agronomic Speech Brief">
+                            <span>🔊 استمع للإرشاد الصوتي (Voice Brief)</span>
+                        </button>
+                    </div>
+
+                    <div class="calc-grid-layout">
+                        <div class="calc-inputs-box">
+                            <div class="form-group">
+                                <label class="calc-label">
+                                    <span id="lbl-feddans">🌱 المساحة الزراعية المستهدفة:</span>
+                                    <span id="disp-feddan-val" class="highlight-val">5 أفدنة (Feddans)</span>
+                                </label>
+                                <input type="range" id="range-feddans" min="1" max="50" value="5" class="calc-slider">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="calc-label" id="lbl-scenario-select" style="font-size: 1rem; font-weight: 800; margin-bottom: 0.6rem;">
+                                    <span>🎯 سيناريو التحول الزراعي في <strong id="calc-active-gov-name" style="color: var(--gold); text-decoration: underline;">محافظة أسيوط</strong>:</span>
+                                </label>
+                                <select id="select-roi-scenario" class="calc-select">
+                                    <!-- Populated dynamically based on active governorate -->
+                                </select>
+                            </div>
+
+                            <!-- Comparison Quick Summary -->
+                            <div id="roi-comparison-summary" style="background: #ffffff; border: 2px solid var(--border-color); border-radius: var(--radius); padding: 1.2rem; font-size: 0.92rem; color: var(--text-dark); line-height: 1.6; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle);">
+                                    <span id="lbl-old-flood" style="color: var(--severity-severe); font-weight: 800; font-size: 0.95rem;">🌾 الاستهلاك القديم بالغمر:</span>
+                                    <span id="disp-curr-water" style="font-family: var(--font-mono); font-weight: 800; font-size: 1.05rem; color: var(--severity-severe);">3,400 م³/فدان</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle);">
+                                    <span id="lbl-rec-drip" style="color: #15803d; font-weight: 800; font-size: 0.95rem;">✨ الاستهلاك الموصى به بالتنقيط:</span>
+                                    <span id="disp-target-water" style="font-family: var(--font-mono); font-weight: 800; font-size: 1.05rem; color: #15803d;">2,300 م³/فدان (وفر 32%)</span>
+                                </div>
+                                <div id="disp-scenario-reason" style="font-size: 0.88rem; font-weight: 700; color: var(--text-dark); line-height: 1.6;">
+                                    توفير 1,100 م³/فدان وحماية المحصول من الرقاد والإجهاد الحراري
+                                </div>
+                            </div>
+
+                            <div id="lbl-arc-source" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; font-family: var(--font-mono); margin-top: 0.2rem;">
+                                📚 المصدر: المقننات المائية المعتمدة لوزارة الموارد المائية والري ومركز البحوث الزراعية (ARC 2024)
+                            </div>
+                        </div>
+
+                        <div class="calc-results-box">
+                            <!-- Animated Interactive Water Tank Visualizer -->
+                            <div class="water-tank-wrapper">
+                                <div class="tank-graphic-container">
+                                    <div class="tank-glass-sheen"></div>
+                                    <div class="tank-water-liquid" id="tank-water-fill" style="height: 52%;">
+                                        <div class="tank-water-wave"></div>
+                                    </div>
+                                </div>
+                                <div class="tank-details-info">
+                                    <div class="tank-pct-badge" id="tank-pct-text">🌊 32% وفر مائي استراتيجي</div>
+                                    <div style="font-size: 0.88rem; font-weight: 800; color: var(--text-dark);" id="tank-vol-title">
+                                        حجم المياه المحمية من الهدر
+                                    </div>
+                                    <div id="lbl-tank-desc" style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.2rem;">
+                                        توفير مياه عالي الكفاءة يقلل الضغط على الخزانات الجوفية وشبكات الترع بصعيد مصر.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="res-card res-water">
+                                <div class="res-label" id="lbl-res-water-title">💧 الوفر المائي السنوي الإجمالي</div>
+                                <div class="res-val" id="res-water-val">5,500 <span class="res-unit">م³ / موسم</span></div>
+                                <div class="res-note" id="res-water-note">وفر يعادل تأمين مياه شرب لـ 14 أسرة مصرية سنوياً</div>
+                            </div>
+
+                            <div class="res-card res-money">
+                                <div class="res-label" id="lbl-res-money-title">💰 الوفر المالي وتكلفة طاقة الري</div>
+                                <div class="res-val" id="res-money-val">12,100 <span class="res-unit">جنيه مصري</span></div>
+                                <div class="res-note" id="lbl-res-money-note">خفض استهلاك السولار والكهرباء والأسمدة المنجرفة مع مياه الغمر</div>
+                            </div>
+
+                            <div class="res-card res-resilience">
+                                <div class="res-label" id="lbl-res-shield-title">🛡️ مؤشر الحماية والأمان من موجات الجفاف</div>
+                                <div class="res-val" id="res-shield-val">+54% <span class="res-unit">مقاومة إجهاد حراري</span></div>
+                                <div class="res-note" id="lbl-res-shield-note">حماية إنتاجية الفدان من التراجع أثناء شهور الجفاف المتوقعة بمؤشر PDSI</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. EXECUTIVE BULLETIN TRIGGER BAR -->
+                <div class="bulletin-trigger-container">
+                    <button id="btn-open-bulletin" class="btn-executive-bulletin">
+                        <span>🏛️ إصدار النشرة التحذيرية القومية الرسمية للمحافظة (Executive Bulletin PDF)</span>
+                        <span>📥</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- TAB 5: 🏛️ ABOUT INITIATIVE & UN SDGs SECTION          -->
+        <!-- ===================================================== -->
+        <div class="tab-pane" id="tab-about">
+            <section class="hero-section" id="hero-section">
+                <h2 class="hero-title-main" id="hero-title-main" style="margin-top: 0.5rem;">
+                    نحو زراعة مستدامة وأمن مائي مصري مدعوم بـ <span>الذكاء الاصطناعي الفضائي</span>
+                </h2>
+
+                <p class="hero-desc-main" id="hero-desc-main" style="font-size: 1.05rem; margin-bottom: 2rem;">
+                    منظومة وطنية ذكية للإنذار المبكر بموجات الجفاف عبر حوض النيل وصعيد مصر لدعم استدامة الموارد المائية وحماية الأمن الغذائي.
+                </p>
+
+                <!-- UN Sustainable Development Goals (SDGs) Grid -->
+                <div class="sdg-section-wrapper">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1.4rem;">
+                        <img src="assets/un_sdgs_wheel.svg" alt="UN SDGs Color Wheel Logo" style="width: 44px; height: 44px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));">
+                        <h3 class="sdg-title-header" id="sdg-title-header" style="margin-bottom: 0;">
+                            التزام استراتيجي بأهداف الأمم المتحدة للتنمية المستدامة (UN SDGs)
+                        </h3>
+                    </div>
+                    <div class="sdg-grid-layout">
+                        <!-- SDG 15: Life on Land -->
+                        <div class="sdg-card-box">
+                            <div style="width: 100%; aspect-ratio: 1/1; border-radius: var(--radius); overflow: hidden; margin-bottom: 0.8rem; box-shadow: 0 3px 8px rgba(0,0,0,0.1);">
+                                <img src="assets/sdg_15.svg" alt="UN SDG 15 Life on Land" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <h4 class="sdg-card-heading" id="sdg-15-title" style="font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem;">الحياة في البر ومكافحة التصحر</h4>
+                            <p class="sdg-card-text" id="sdg-15-desc" style="font-size: 0.78rem; line-height: 1.5; color: var(--text-muted);">
+                                استصلاح الأراضي وحماية الرقعة الزراعية في صعيد مصر وحوض النيل من تدهور التربة والتصحر.
+                            </p>
+                        </div>
+
+                        <!-- SDG 6: Clean Water -->
+                        <div class="sdg-card-box">
+                            <div style="width: 100%; aspect-ratio: 1/1; border-radius: var(--radius); overflow: hidden; margin-bottom: 0.8rem; box-shadow: 0 3px 8px rgba(0,0,0,0.1);">
+                                <img src="assets/sdg_6.svg" alt="UN SDG 6 Clean Water and Sanitation" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h4 class="sdg-card-heading" id="sdg-6-title" style="font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem;">الإدارة المستدامة للمياه النظيفة</h4>
+                            <p class="sdg-card-text" id="sdg-6-desc" style="font-size: 0.78rem; line-height: 1.5; color: var(--text-muted);">
+                                التنبؤ الاستباقي بالعجز المائي وترشيد تصرفات شبكات الترع والتحول لأنظمة الري الحديثة.
+                            </p>
+                        </div>
+
+                        <!-- SDG 2: Zero Hunger -->
+                        <div class="sdg-card-box">
+                            <div style="width: 100%; aspect-ratio: 1/1; border-radius: var(--radius); overflow: hidden; margin-bottom: 0.8rem; box-shadow: 0 3px 8px rgba(0,0,0,0.1);">
+                                <img src="assets/sdg_2.svg" alt="UN SDG 2 Zero Hunger" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h4 class="sdg-card-heading" id="sdg-2-title" style="font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem;">القضاء على الجوع والأمن الغذائي</h4>
+                            <p class="sdg-card-text" id="sdg-2-desc" style="font-size: 0.78rem; line-height: 1.5; color: var(--text-muted);">
+                                حماية إنتاجية المحاصيل الاستراتيجية وتوجيه المزارعين للمحاصيل المقاومة للإجهاد الحراري.
+                            </p>
+                        </div>
+
+                        <!-- SDG 13: Climate Action -->
+                        <div class="sdg-card-box">
+                            <div style="width: 100%; aspect-ratio: 1/1; border-radius: var(--radius); overflow: hidden; margin-bottom: 0.8rem; box-shadow: 0 3px 8px rgba(0,0,0,0.1);">
+                                <img src="assets/sdg_13.svg" alt="UN SDG 13 Climate Action" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h4 class="sdg-card-heading" id="sdg-13-title" style="font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem;">العمل المناخي والتكيف</h4>
+                            <p class="sdg-card-text" id="sdg-13-desc" style="font-size: 0.78rem; line-height: 1.5; color: var(--text-muted);">
+                                بناء أنظمة إنذار مبكر مناخية فائقة الدقة لمجابهة التغيرات المناخية وموجات الجفاف.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slogan Pill Badge -->
+                <div style="display: flex; justify-content: center; margin-bottom: 0.8rem;">
+                    <div class="slogan-badge-pill" id="hero-slogan-badge">
+                        <span>🌱 نستبق الجفاف.. لأمان النيل ونماء الأرض</span>
+                    </div>
+                </div>
+
+                <!-- Hero Key Stats Bar -->
+                <div class="hero-footer-bar-strip" style="margin-top: 2rem;">
+                    <div class="hero-stats-row">
+                        <div class="hero-stat-item">
+                            <span class="hero-stat-number">768+</span>
+                            <span class="hero-stat-label" id="stat-lbl-1">شهراً من بيانات TerraClimate الفضائية</span>
+                        </div>
+                        <div class="hero-stat-item">
+                            <span class="hero-stat-number">8</span>
+                            <span class="hero-stat-label" id="stat-lbl-2">محافظات رئيسية بصعيد مصر (وادي النيل)</span>
+                        </div>
+                        <div class="hero-stat-item">
+                            <span class="hero-stat-number">94.6%</span>
+                            <span class="hero-stat-label" id="stat-lbl-3">دقة التنبؤ والاستجابة المناخية (R² = 0.760)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <!-- Bottom Model Meta Bar with Slogan -->
+    <div class="bottom-model-bar" id="footer-slogan-bar">
+        NileGuard AI Platform · « نستبق الجفاف.. لأمان النيل ونماء الأرض » · Arab Republic of Egypt 2026
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- 5. EXECUTIVE DROUGHT BULLETIN PRINTABLE MODAL             -->
+    <!-- ========================================================= -->
+    <div class="bulletin-modal-backdrop" id="bulletin-modal">
+        <div class="bulletin-modal-content">
+            <button class="bulletin-close-btn" id="btn-close-bulletin">&times;</button>
+            
+            <div class="bulletin-header-top">
+                <div>
+                    <span class="label-caps">جمهورية مصر العربية · وزارة الموارد المائية والري</span>
+                    <h2 class="bulletin-title-ar">النشرة القومية للإنذار المبكر بمخاطر الجفاف الزراعي</h2>
+                    <p style="font-size: 0.78rem; color: var(--gold); font-weight: 700; margin-top: 0.2rem;" id="bulletin-slogan-text">
+                        منظومة NileGuard · « نستبق الجفاف.. لأمان النيل ونماء الأرض »
+                    </p>
+                </div>
+                <div class="bulletin-stamp" id="bulletin-stamp-text">
+                    تحذير: جفاف معتدل
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="bulletin-metric-tile">
+                    <span class="label-caps">المحافظة المستهدفة</span>
+                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-top: 0.3rem;" id="bulletin-gov-name">أسيوط (Asyut)</h3>
+                </div>
+                <div class="bulletin-metric-tile">
+                    <span class="label-caps">مؤشر بالمر المتوقع (PDSI)</span>
+                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-top: 0.3rem; color: var(--severity-severe);" id="bulletin-pdsi-val">-1.82 Palmer</h3>
+                </div>
+                <div class="bulletin-metric-tile">
+                    <span class="label-caps">موثوقية التنبؤ</span>
+                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-top: 0.3rem;" id="bulletin-r2-val">R² = 0.760 (عالية)</h3>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-parchment); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.2rem; margin-bottom: 1.5rem;">
+                <h4 style="font-family: var(--font-serif); font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.6rem;">
+                    📋 التوجيهات والإجراءات الفورية لمديريات الري والزراعة:
+                </h4>
+                <ul style="padding-right: 1.2rem; font-size: 0.84rem; line-height: 1.8; color: var(--text-dark);" id="bulletin-directives-list">
+                    <li>تعديل مناوبات الري وجداول تصرفات الترع الرئيسية لتفادي فترات الذروة الحرارية.</li>
+                    <li>التشديد على تطبيق تقنيات الري بالتنقيط وبدء توزيع تقاوي الأصناف المعتمدة الموفرة للمياه.</li>
+                    <li>إلزام مزارعي القصب والبساتين بالتسوية الدقيقة بالليزر لتقليل الفواقد المائية بنسبة 35%.</li>
+                    <li>تفعيل غرفة العمليات المركزية لمتابعة محطات الرصد عبر حوض النيل وصعيد مصر.</li>
+                </ul>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <div style="font-size: 0.74rem; color: var(--text-muted); font-family: var(--font-mono);">
+                    تاريخ الإصدار: 2026/08/15 · رقم الوثيقة: NG-EGY-2026-08
+                </div>
+                <button onclick="window.print()" class="btn-player-play" style="padding: 0.5rem 1.2rem;">
+                    <span>طباعة النشرة الرسمية 🖨️</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="app.js?v=6.0"></script>
+</body>
+</html>
