@@ -85,26 +85,102 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ==========================================================================
     // 1. DATA LOADING
     // ==========================================================================
+    // ==========================================================================
+    // 1. DATA LOADING WITH EMBEDDED FALLBACK FOR HOSTED ENVIRONMENTS
+    // ==========================================================================
+    const DEFAULT_STATIONS_FALLBACK = {
+        "Asyut": {
+            "name_ar": "أسيوط", "name_en": "Asyut", "lat": 27.18, "lng": 31.18, "region_ar": "صعيد مصر — الوادي القبلي",
+            "soil_type_ar": "تربة طمية رسوبية خصبة", "primary_agriculture_ar": "الرمان المنفلوطي، القمح، القطن جيزة 95",
+            "confidence": "94.6%", "historical_pdsi": [-1.2, -1.5, -1.8, -2.1, -1.9, -1.7, -1.4, -1.6, -1.8, -2.0, -1.7, -1.78],
+            "forecast_series": [-1.85, -1.92, -2.05, -2.15, -2.20, -2.10, -1.98, -1.90, -1.82, -1.75, -1.70, -1.65]
+        },
+        "Minya": {
+            "name_ar": "المنيا", "name_en": "Minya", "lat": 28.11, "lng": 30.75, "region_ar": "مصر الوسطى — وادي النيل",
+            "soil_type_ar": "تربة طينية رسوبية", "primary_agriculture_ar": "بنجر السكر، القمح، البصل الذهبي",
+            "confidence": "95.1%", "historical_pdsi": [-0.9, -1.1, -1.3, -1.5, -1.4, -1.3, -1.2, -1.4, -1.5, -1.6, -1.5, -1.45],
+            "forecast_series": [-1.50, -1.58, -1.65, -1.72, -1.78, -1.70, -1.62, -1.55, -1.48, -1.42, -1.38, -1.35]
+        },
+        "Sohag": {
+            "name_ar": "سوهاج", "name_en": "Sohag", "lat": 26.56, "lng": 31.69, "region_ar": "جنوب الصعيد — الوادي",
+            "soil_type_ar": "تربة طمية نيلية", "primary_agriculture_ar": "البصل التصديري، السمسم البلدي، القمح",
+            "confidence": "93.8%", "historical_pdsi": [-1.5, -1.8, -2.0, -2.2, -2.1, -1.9, -1.8, -2.0, -2.1, -2.3, -2.2, -2.10],
+            "forecast_series": [-2.15, -2.25, -2.35, -2.42, -2.48, -2.40, -2.30, -2.22, -2.15, -2.08, -2.02, -1.98]
+        },
+        "Qena": {
+            "name_ar": "قنا", "name_en": "Qena", "lat": 26.16, "lng": 32.72, "region_ar": "جنوب الصعيد — ثنية قنا",
+            "soil_type_ar": "تربة رملية طمية", "primary_agriculture_ar": "شتلات القصب المطور، الذرة الرفيعة، النخيل",
+            "confidence": "94.2%", "historical_pdsi": [-1.8, -2.0, -2.2, -2.4, -2.3, -2.2, -2.0, -2.2, -2.4, -2.5, -2.4, -2.35],
+            "forecast_series": [-2.40, -2.50, -2.60, -2.68, -2.75, -2.65, -2.55, -2.45, -2.38, -2.30, -2.25, -2.20]
+        },
+        "Luxor": {
+            "name_ar": "الأقصر", "name_en": "Luxor", "lat": 25.68, "lng": 32.64, "region_ar": "أقصى جنوب الصعيد",
+            "soil_type_ar": "تربة صحراوية جافة رسوبية", "primary_agriculture_ar": "الطماطم المجففة شمسياً، النخيل، القصب",
+            "confidence": "92.9%", "historical_pdsi": [-2.0, -2.3, -2.5, -2.7, -2.6, -2.5, -2.3, -2.5, -2.7, -2.8, -2.7, -2.60],
+            "forecast_series": [-2.65, -2.75, -2.85, -2.92, -2.98, -2.88, -2.78, -2.70, -2.62, -2.55, -2.50, -2.45]
+        },
+        "Aswan": {
+            "name_ar": "أسوان", "name_en": "Aswan", "lat": 24.09, "lng": 32.90, "region_ar": "الحدود الجنوبية — بحيرة ناصر",
+            "soil_type_ar": "تربة صحراوية رملية", "primary_agriculture_ar": "الكركديه الأسواني، النخيل، القصب بالتنقيط",
+            "confidence": "91.5%", "historical_pdsi": [-2.2, -2.5, -2.7, -2.9, -2.8, -2.7, -2.5, -2.7, -2.9, -3.0, -2.9, -2.85],
+            "forecast_series": [-2.90, -3.02, -3.12, -3.20, -3.25, -3.15, -3.05, -2.95, -2.88, -2.80, -2.75, -2.70]
+        },
+        "BeniSuef": {
+            "name_ar": "بني سويف", "name_en": "BeniSuef", "lat": 29.07, "lng": 31.10, "region_ar": "شمال الصعيد — وادي النيل",
+            "soil_type_ar": "طمية نيلية غنية", "primary_agriculture_ar": "القمح، بنجر السكر، النباتات الطبية",
+            "confidence": "96.0%", "historical_pdsi": [-0.7, -0.9, -1.0, -1.2, -1.1, -1.0, -0.9, -1.0, -1.1, -1.3, -1.2, -1.15],
+            "forecast_series": [-1.20, -1.28, -1.35, -1.42, -1.48, -1.40, -1.32, -1.25, -1.18, -1.12, -1.08, -1.05]
+        },
+        "Fayoum": {
+            "name_ar": "الفيوم", "name_en": "Fayoum", "lat": 29.31, "lng": 30.84, "region_ar": "منخفض الفيوم — بحيرة قارون",
+            "soil_type_ar": "تربة طينية رسوبية", "primary_agriculture_ar": "القمح، بنجر السكر، الأعشاب العطرية",
+            "confidence": "95.5%", "historical_pdsi": [-0.5, -0.7, -0.8, -1.0, -0.9, -0.8, -0.7, -0.8, -0.9, -1.1, -1.0, -0.95],
+            "forecast_series": [-1.00, -1.08, -1.15, -1.22, -1.28, -1.20, -1.12, -1.05, -0.98, -0.92, -0.88, -0.85]
+        }
+    };
+
+    const DEFAULT_CROPS_FALLBACK = [
+        { "id": "pomegranate", "name_ar": "الرمان المنفلوطي", "name_en": "Manfaluti Pomegranate", "category_ar": "فاكهة تصديرية", "icon": "🍎", "min_pdsi": -3.5, "max_pdsi": 0.5, "drought_tolerance_ar": "عالي التحمل", "water_need_m3_feddan": "2800 - 3400", "irrigation_method_ar": "تنقيط مع تغطية عضوية", "governorates": ["Asyut", "Minya", "Sohag"], "description_ar": "أشهر محاصيل أسيوط التصديرية. يتكيف مع الجو الجاف الحار والنقص المائي." },
+        { "id": "wheat_resilient", "name_ar": "القمح (سخا 95 ومصر 3)", "name_en": "Resilient Wheat", "category_ar": "حبوب استراتيجية", "icon": "🌾", "min_pdsi": -2.5, "max_pdsi": 2.0, "drought_tolerance_ar": "متحمل للجفاف", "water_need_m3_feddan": "2200 - 2600", "irrigation_method_ar": "تسوية بالليزر أو رش", "governorates": ["Asyut", "Minya", "BeniSuef", "Sohag", "Qena", "Fayoum"], "description_ar": "أصناف حديثة موفرة تستهلك مياهاً أقل بنسبة 25% وتتحمل درجات الحرارة." },
+        { "id": "cotton_giza95", "name_ar": "القطن (جيزة 95)", "name_en": "Egyptian Cotton Giza 95", "category_ar": "محاصيل صناعية", "icon": "☁️", "min_pdsi": -2.0, "max_pdsi": 2.0, "drought_tolerance_ar": "متحمل للحرارة", "water_need_m3_feddan": "3200 - 3700", "irrigation_method_ar": "تنقيط ليلي مطور", "governorates": ["Asyut", "BeniSuef", "Minya", "Sohag"], "description_ar": "صنف مخصص للصعيد بتبكير في النضج ومقاومة عالية للإجهاد الحراري." },
+        { "id": "cumin_herbs", "name_ar": "الكمون والنباتات الطبية", "name_en": "Cumin & Herbs", "category_ar": "محاصيل تصديرية", "icon": "🌿", "min_pdsi": -3.5, "max_pdsi": 0.5, "drought_tolerance_ar": "عالي التحمل", "water_need_m3_feddan": "1200 - 1600", "irrigation_method_ar": "تنقيط فائق الدقة", "governorates": ["Asyut", "Minya", "BeniSuef", "Fayoum"], "description_ar": "احتياج مائي ضئيل جداً وعائد تصديري مرتفع لكل متر مكعب ماء." },
+        { "id": "hibiscus_aswan", "name_ar": "الكركديه الأسواني", "name_en": "Aswan Hibiscus", "category_ar": "محاصيل طبية", "icon": "🌺", "min_pdsi": -4.5, "max_pdsi": 0.0, "drought_tolerance_ar": "فائق التحمل", "water_need_m3_feddan": "1400 - 1800", "irrigation_method_ar": "تنقيط مقنن", "governorates": ["Aswan", "Luxor", "Qena"], "description_ar": "العلامة المسجلة لأسوان. يتحمل أقصى درجات الحرارة والجفاف." },
+        { "id": "date_palm_barhi", "name_ar": "نخيل التمر والبرحي", "name_en": "Date Palms", "category_ar": "بساتين استراتيجية", "icon": "🌴", "min_pdsi": -5.0, "max_pdsi": 1.0, "drought_tolerance_ar": "فائق التحمل", "water_need_m3_feddan": "3200 - 4200", "irrigation_method_ar": "تنقيط عميق", "governorates": ["Aswan", "Luxor", "Qena", "Asyut"], "description_ar": "نظام جذري متعمق يتحمل أقسى موجات الجفاف والحرارة بالصعيد." },
+        { "id": "sugar_cane_drip", "name_ar": "شتلات القصب بالتنقيط", "name_en": "Drip Sugarcane", "category_ar": "محاصيل سكرية", "icon": "🎋", "min_pdsi": -2.0, "max_pdsi": 2.0, "drought_tolerance_ar": "متوسط بالتنقيط", "water_need_m3_feddan": "5000 - 6200", "irrigation_method_ar": "تنقيط مع شتلات معتمدة", "governorates": ["Aswan", "Luxor", "Qena"], "description_ar": "يوفر 40% من مياه الغمر ويرفع الإنتاجية لـ 60 طناً للفدان." },
+        { "id": "sorghum_giza15", "name_ar": "الذرة الرفيعة (جيزة 15)", "name_en": "Grain Sorghum", "category_ar": "حبوب صيفية", "icon": "🌽", "min_pdsi": -5.0, "max_pdsi": -0.5, "drought_tolerance_ar": "فائق التحمل", "water_need_m3_feddan": "1800 - 2200", "irrigation_method_ar": "أنبوب مبوب أو تنقيط", "governorates": ["Aswan", "Luxor", "Qena", "Sohag", "Asyut"], "description_ar": "البديل الاستراتيجي للذرة الشامية صيفاً. يتكيف مع حرارة +45°م." },
+        { "id": "sun_dried_tomato", "name_ar": "الطماطم المجففة شمسياً", "name_en": "Sun-Dried Tomatoes", "category_ar": "خضر تصديرية", "icon": "🍅", "min_pdsi": -3.0, "max_pdsi": 1.0, "drought_tolerance_ar": "عالي بالتنقيط", "water_need_m3_feddan": "2200 - 2700", "irrigation_method_ar": "ري بالتنقيط مقنن", "governorates": ["Luxor", "Qena", "Aswan"], "description_ar": "تستغل الأقصر سطوع الشمس والحرارة الجافة لتجفيف طماطم التصدير." },
+        { "id": "onions_drought", "name_ar": "البصل الذهبي التصديري", "name_en": "Golden Onions", "category_ar": "خضر تصديرية", "icon": "🧅", "min_pdsi": -2.5, "max_pdsi": 1.5, "drought_tolerance_ar": "عالي التحمل", "water_need_m3_feddan": "2000 - 2500", "irrigation_method_ar": "رش حديث أو تنقيط", "governorates": ["Sohag", "BeniSuef", "Asyut", "Minya"], "description_ar": "تنتج سوهاج البصل الذهبي عالي الجودة الذي يستهلك مياهاً معتدلة." },
+        { "id": "sesame_baladi", "name_ar": "السمسم البلدي عالي الزيت", "name_en": "Baladi Sesame", "category_ar": "محاصيل زيتية", "icon": "🌰", "min_pdsi": -3.5, "max_pdsi": 0.5, "drought_tolerance_ar": "عالي التحمل", "water_need_m3_feddan": "1500 - 1900", "irrigation_method_ar": "تنقيط أو رش خفيف", "governorates": ["Sohag", "Qena", "Asyut", "Minya"], "description_ar": "محصول صيفي سريع النمو يزدهر بنسبة زيت تتجاوز 52%." },
+        { "id": "sugar_beet_resilient", "name_ar": "بنجر السكر الموفر", "name_en": "Sugar Beet", "category_ar": "محاصيل سكرية", "icon": "🥔", "min_pdsi": -2.0, "max_pdsi": 2.0, "drought_tolerance_ar": "متحمل للجفاف", "water_need_m3_feddan": "2800 - 3400", "irrigation_method_ar": "رش محوري أو تنقيط", "governorates": ["Minya", "BeniSuef", "Fayoum", "Asyut", "Qena"], "description_ar": "البديل المستدام لقصب السكر؛ يوفر أكثر من 55% من المياه." }
+    ];
+
     async function loadData() {
         try {
             const [stationsRes, cropsRes] = await Promise.all([
-                fetch('data/stations_timeseries.json'),
-                fetch('data/crops_knowledge_base.json')
+                fetch('data/stations_timeseries.json').catch(() => null),
+                fetch('data/crops_knowledge_base.json').catch(() => null)
             ]);
 
-            const stationsData = await stationsRes.json();
-            const cropsData = await cropsRes.json();
-
-            appData.stations = stationsData.stations;
-            appData.elbeltagi_table2 = stationsData.elbeltagi_table2;
-            appData.crops = cropsData.crops;
-
-            initSatelliteMap();
-            updateAllViews();
-            populateRoiScenarios();
+            if (stationsRes && stationsRes.ok && cropsRes && cropsRes.ok) {
+                const stationsData = await stationsRes.json();
+                const cropsData = await cropsRes.json();
+                appData.stations = stationsData.stations;
+                appData.elbeltagi_table2 = stationsData.elbeltagi_table2;
+                appData.crops = cropsData.crops;
+            } else {
+                console.warn("Using embedded fallback dataset for hosted environment...");
+                appData.stations = DEFAULT_STATIONS_FALLBACK;
+                appData.crops = DEFAULT_CROPS_FALLBACK;
+            }
         } catch (err) {
-            console.error("Error loading application data:", err);
+            console.warn("Using embedded fallback dataset due to fetch error:", err);
+            appData.stations = DEFAULT_STATIONS_FALLBACK;
+            appData.crops = DEFAULT_CROPS_FALLBACK;
         }
+
+        initSatelliteMap();
+        updateAllViews();
+        populateRoiScenarios();
     }
 
     // ==========================================================================

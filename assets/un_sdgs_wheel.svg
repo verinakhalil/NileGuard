@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- SDG 17 Colors -->
+    <linearGradient id="sdgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5243B"/>
+      <stop offset="100%" stop-color="#0A97D9"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(250, 250)">
+    <!-- 17 segments wheel -->
+    <!-- Segment 1: Red #E5243B -->
+    <path d="M0,-220 A220,220 0 0,1 79,-205 L43,-112 A120,120 0 0,0 0,-120 Z" fill="#E5243B"/>
+    <!-- Segment 2: Mustard #DDA63A -->
+    <path d="M79,-205 A220,220 0 0,1 148,-162 L81,-88 A120,120 0 0,0 43,-112 Z" fill="#DDA63A"/>
+    <!-- Segment 3: Green #4C9F38 -->
+    <path d="M148,-162 A220,220 0 0,1 199,-95 L108,-52 A120,120 0 0,0 81,-88 Z" fill="#4C9F38"/>
+    <!-- Segment 4: Dark Red #C5192D -->
+    <path d="M199,-95 A220,220 0 0,1 220,-10 L120,-5 A120,120 0 0,0 108,-52 Z" fill="#C5192D"/>
+    <!-- Segment 5: Orange-Red #FF3A21 -->
+    <path d="M220,-10 A220,220 0 0,1 207,75 L113,41 A120,120 0 0,0 120,-5 Z" fill="#FF3A21"/>
+    <!-- Segment 6: Light Blue #26BDE2 -->
+    <path d="M207,75 A220,220 0 0,1 162,148 L88,81 A120,120 0 0,0 113,41 Z" fill="#26BDE2"/>
+    <!-- Segment 7: Yellow #FCC30B -->
+    <path d="M162,148 A220,220 0 0,1 95,199 L52,108 A120,120 0 0,0 88,81 Z" fill="#FCC30B"/>
+    <!-- Segment 8: Burgundy #A21942 -->
+    <path d="M95,199 A220,220 0 0,1 10,220 L5,120 A120,120 0 0,0 52,108 Z" fill="#A21942"/>
+    <!-- Segment 9: Orange #FD6925 -->
+    <path d="M10,220 A220,220 0 0,1 -75,207 L-41,113 A120,120 0 0,0 5,120 Z" fill="#FD6925"/>
+    <!-- Segment 10: Pink #DD1367 -->
+    <path d="M-75,207 A220,220 0 0,1 -148,162 L-81,88 A120,120 0 0,0 -41,113 Z" fill="#DD1367"/>
+    <!-- Segment 11: Amber #FD9D24 -->
+    <path d="M-148,162 A220,220 0 0,1 -199,95 L-108,52 A120,120 0 0,0 -81,88 Z" fill="#FD9D24"/>
+    <!-- Segment 12: Mustard #BF8B2E -->
+    <path d="M-199,95 A220,220 0 0,1 -220,10 L-120,5 A120,120 0 0,0 -108,52 Z" fill="#BF8B2E"/>
+    <!-- Segment 13: Forest Green #3F7E44 -->
+    <path d="M-220,10 A220,220 0 0,1 -207,-75 L-113,-41 A120,120 0 0,0 -120,5 Z" fill="#3F7E44"/>
+    <!-- Segment 14: Blue #0A97D9 -->
+    <path d="M-207,-75 A220,220 0 0,1 -162,-148 L-88,-81 A120,120 0 0,0 -113,-41 Z" fill="#0A97D9"/>
+    <!-- Segment 15: Green #56C02B -->
+    <path d="M-162,-148 A220,220 0 0,1 -95,-199 L-52,-108 A120,120 0 0,0 -88,-81 Z" fill="#56C02B"/>
+    <!-- Segment 16: Navy #00689D -->
+    <path d="M-95,-199 A220,220 0 0,1 -10,-220 L-5,-120 A120,120 0 0,0 -52,-108 Z" fill="#00689D"/>
+    <!-- Segment 17: Dark Navy #19486A -->
+    <path d="M-10,-220 A220,220 0 0,1 0,-220 L0,-120 A120,120 0 0,0 -5,-120 Z" fill="#19486A"/>
+
+    <!-- Center Text -->
+    <circle r="105" fill="#ffffff"/>
+    <text text-anchor="middle" y="-12" font-family="'Cairo', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="34" fill="#1d3c34" letter-spacing="1">SUSTAINABLE</text>
+    <text text-anchor="middle" y="22" font-family="'Cairo', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="32" fill="#1d3c34" letter-spacing="1">DEVELOPMENT</text>
+    <text text-anchor="middle" y="58" font-family="'Cairo', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="38" fill="#d4a373" letter-spacing="2">GOALS</text>
+  </g>
+</svg>

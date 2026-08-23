@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <rect width="500" height="500" rx="24" fill="#3F7E44"/>
+  <!-- Number 13 -->
+  <text x="30" y="135" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="125" fill="#ffffff">13</text>
+  <!-- Text Label -->
+  <text x="175" y="72" font-family="'Impact', 'Arial Black', sans-serif" font-weight="800" font-size="42" fill="#ffffff" letter-spacing="1">CLIMATE</text>
+  <text x="175" y="118" font-family="'Impact', 'Arial Black', sans-serif" font-weight="800" font-size="42" fill="#ffffff" letter-spacing="1">ACTION</text>
+  <!-- Official Icon: Eye around globe -->
+  <g transform="translate(250, 315)" fill="#ffffff">
+    <path d="M-130,0 C-80,-70 80,-70 130,0 C80,70 -80,70 -130,0 Z" fill="none" stroke="#ffffff" stroke-width="18"/>
+    <circle cx="0" cy="0" r="42" fill="#ffffff"/>
+    <circle cx="0" cy="0" r="26" fill="#3F7E44"/>
+  </g>
+</svg>

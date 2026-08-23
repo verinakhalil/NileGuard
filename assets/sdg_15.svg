@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <rect width="500" height="500" rx="24" fill="#56C02B"/>
+  <!-- Number 15 -->
+  <text x="30" y="135" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="125" fill="#ffffff">15</text>
+  <!-- Text Label -->
+  <text x="175" y="72" font-family="'Impact', 'Arial Black', sans-serif" font-weight="800" font-size="42" fill="#ffffff" letter-spacing="1">LIFE</text>
+  <text x="175" y="118" font-family="'Impact', 'Arial Black', sans-serif" font-weight="800" font-size="42" fill="#ffffff" letter-spacing="1">ON LAND</text>
+  <!-- Official Icon: Tree, bird, earth -->
+  <g transform="translate(250, 315)" fill="#ffffff">
+    <!-- Tree Trunk -->
+    <rect x="-85" y="10" width="16" height="50" fill="#ffffff"/>
+    <line x1="-120" y1="60" x2="120" y2="60" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
+    <line x1="-120" y1="85" x2="120" y2="85" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
+    <!-- Tree Leaves -->
+    <path d="M-77,15 C-115,15 -125,-25 -105,-50 C-120,-80 -85,-110 -55,-95 C-35,-120 15,-105 10,-70 C30,-50 15,-10 -25,-10 C-35,15 -65,15 -77,15 Z" fill="#ffffff"/>
+    <!-- Birds in Sky -->
+    <path d="M40,-75 Q55,-90 70,-75 Q85,-90 100,-75 Q85,-82 70,-72 Q55,-82 40,-75 Z" fill="#ffffff"/>
+    <path d="M70,-35 Q82,-47 95,-35 Q107,-47 120,-35 Q107,-41 95,-32 Q82,-41 70,-35 Z" fill="#ffffff"/>
+  </g>
+</svg>
