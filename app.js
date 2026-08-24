@@ -303,6 +303,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    function updateReportDynamicHeader() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const liveDateStr = `${year}/${month}/${day}`;
+
+        const reportDateEl = document.getElementById('report-issue-date');
+        const reportGovEl = document.getElementById('report-target-gov');
+        const st = appData.stations[activeGov];
+
+        if (reportDateEl) reportDateEl.textContent = liveDateStr;
+        if (reportGovEl && st) reportGovEl.textContent = currentLang === 'en' ? st.name_en : st.name_ar;
+    }
+
     // ==========================================================================
     // 3. SELECTION & REACTION ENGINE
     // ==========================================================================
