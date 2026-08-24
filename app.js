@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (txtChartTitle) {
             txtChartTitle.textContent = currentLang === 'en'
                 ? `${st.name_en} — PDSI Drought Trajectory & CNN-Transformer Forecast`
-                : `${st.name_ar} — مسار الجفاف وتنبؤات موديل CNN-Transformer (4-Category AI Engine)`;
+                : `${st.name_ar} — مسار الجفاف وتنبؤات موديل CNN-Transformer (6-Category AI Engine)`;
         }
 
         const labels = [];
