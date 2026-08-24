@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (txtChartTitle) {
             txtChartTitle.textContent = currentLang === 'en'
                 ? `${st.name_en} — PDSI Drought Trajectory & CNN-Transformer Forecast`
-                : `${st.name_ar} — مسار الجفاف وتنبؤات موديل CNN-Transformer (6-Category AI Engine)`;
+                : `${st.name_ar} — مسار الجفاف وتنبؤات موديل CNN-Transformer (4-Category AI Engine)`;
         }
 
         const labels = [];
@@ -486,8 +486,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const predData = [];
 
         const histMonths = [
-            "2019-01", "2019-03", "2019-05", "2019-07", "2019-09", "2019-11",
-            "2020-01", "2020-03", "2020-05", "2020-07", "2020-09", "2020-11"
+            "2023-01", "2023-03", "2023-05", "2023-07", "2023-09", "2023-11",
+            "2024-01", "2024-03", "2024-05", "2024-07", "2024-09", "2024-11"
         ];
 
         for (let i = 0; i < histMonths.length; i++) {
@@ -499,9 +499,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const lastActual = actualData[actualData.length - 1];
         predData[predData.length - 1] = lastActual;
 
-        const forecastMonths = ["2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12"];
+        const forecastMonths = ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12"];
         for (let h = 0; h < currentHorizon; h++) {
-            labels.push(forecastMonths[h] || `2021-${h+1}`);
+            labels.push(forecastMonths[h] || `2025-${h+1}`);
             actualData.push(null);
             predData.push(st.forecast_series[h]);
         }

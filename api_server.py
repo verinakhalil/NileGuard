@@ -56,62 +56,44 @@ GOV_METADATA_AR = {
     "Fayoum": {"name_ar": "الفيوم", "soil_ar": "تربة طينية رسوبية", "primary_agri": "القمح، بنجر السكر، الأعشاب العطرية"}
 }
 
-def classify_drought_6_categories(pdsi: float) -> dict:
+def classify_drought_4_categories(pdsi: float) -> dict:
     """
-    Classifies PDSI into the 6 official International & National Drought Categories (6 Categories):
-        Category 0: Normal / Wet (طبيعي / رطب)          -> PDSI > 0.0
-        Category 1: Mild / Incipient (جفاف خفيف / بداية) -> -1.0 < PDSI <= 0.0
-        Category 2: Moderate Drought (جفاف متوسط)       -> -2.0 < PDSI <= -1.0
-        Category 3: Severe Drought (جفاف شديد)          -> -3.0 < PDSI <= -2.0
-        Category 4: Extreme Drought (جفاف شديد للغاية)   -> -4.0 < PDSI <= -3.0
-        Category 5: Exceptional Crisis (جفاف حرج استثنائي)-> PDSI <= -4.0
+    Classifies PDSI into the 4 official National Drought Categories:
+        Category 0: Mild / Normal (طبيعي / خفيف)     -> PDSI > -1.0
+        Category 1: Moderate Drought (جفاف متوسط)     -> -2.0 < PDSI <= -1.0
+        Category 2: Severe Drought (جفاف شديد)        -> -3.0 < PDSI <= -2.0
+        Category 3: Extreme Crisis (جفاف حرج للغاية)  -> PDSI <= -3.0
     """
-    if pdsi <= -4.0:
+    if pdsi <= -3.0:
         return {
-            "category_code": 5,
-            "category_ar": "جفاف حرج استثنائي (Category 5 - Exceptional Crisis)",
-            "category_en": "Category 5 — Exceptional Crisis",
-            "severity_label_ar": "حرج استثنائي",
-            "color_code": "#7f1d1d"
-        }
-    elif pdsi <= -3.0:
-        return {
-            "category_code": 4,
-            "category_ar": "جفاف شديد للغاية (Category 4 - Extreme Drought)",
-            "category_en": "Category 4 — Extreme Drought",
-            "severity_label_ar": "شديد للغاية",
+            "category_code": 3,
+            "category_ar": "جفاف حرج للغاية (Category 3 - Extreme Crisis)",
+            "category_en": "Category 3 — Extreme Drought Crisis",
+            "severity_label_ar": "حرج للغاية",
             "color_code": "#b91c1c"
         }
     elif pdsi <= -2.0:
         return {
-            "category_code": 3,
-            "category_ar": "جفاف شديد (Category 3 - Severe Drought)",
-            "category_en": "Category 3 — Severe Drought",
+            "category_code": 2,
+            "category_ar": "جفاف شديد (Category 2 - Severe Drought)",
+            "category_en": "Category 2 — Severe Drought",
             "severity_label_ar": "شديد",
             "color_code": "#ea580c"
         }
     elif pdsi <= -1.0:
         return {
-            "category_code": 2,
-            "category_ar": "جفاف متوسط (Category 2 - Moderate Drought)",
-            "category_en": "Category 2 — Moderate Drought",
+            "category_code": 1,
+            "category_ar": "جفاف متوسط (Category 1 - Moderate Drought)",
+            "category_en": "Category 1 — Moderate Drought",
             "severity_label_ar": "متوسط",
             "color_code": "#d97706"
-        }
-    elif pdsi <= 0.0:
-        return {
-            "category_code": 1,
-            "category_ar": "جفاف خفيف / مبدئي (Category 1 - Mild Drought)",
-            "category_en": "Category 1 — Mild Drought",
-            "severity_label_ar": "خفيف",
-            "color_code": "#eab308"
         }
     else:
         return {
             "category_code": 0,
-            "category_ar": "طبيعي / رطب (Category 0 - Normal / Wet)",
-            "category_en": "Category 0 — Normal / Wet",
-            "severity_label_ar": "طبيعي / رطب",
+            "category_ar": "طبيعي / خفيف (Category 0 - Normal / Mild)",
+            "category_en": "Category 0 — Normal / Mild",
+            "severity_label_ar": "منخفض / طبيعي",
             "color_code": "#16a34a"
         }
 
@@ -183,16 +165,14 @@ class PredictRequest(BaseModel):
 def root():
     return {
         "status": "online",
-        "service": "NileGuard CNN-Transformer 6-Category Drought Engine",
+        "service": "NileGuard CNN-Transformer 4-Category Drought Engine",
         "version": "3.0.0",
         "loaded_governorates": list(MODELS.keys()),
         "drought_categories": [
-            "Category 0: Normal / Wet (PDSI > 0.0)",
-            "Category 1: Mild Drought (-1.0 < PDSI <= 0.0)",
-            "Category 2: Moderate Drought (-2.0 < PDSI <= -1.0)",
-            "Category 3: Severe Drought (-3.0 < PDSI <= -2.0)",
-            "Category 4: Extreme Drought (-4.0 < PDSI <= -3.0)",
-            "Category 5: Exceptional Crisis (PDSI <= -4.0)"
+            "Category 0: Mild/Normal (PDSI > -1.0)",
+            "Category 1: Moderate (PDSI -1.0 to -2.0)",
+            "Category 2: Severe (PDSI -2.0 to -3.0)",
+            "Category 3: Extreme Crisis (PDSI <= -3.0)"
         ],
         "docs": "http://localhost:8000/docs"
     }
@@ -259,8 +239,8 @@ def predict_drought(req: PredictRequest):
     target_month = max(1, min(req.horizon_month, 12))
     target_pdsi = forecast_12m[target_month - 1]
 
-    # Classify into 6 Drought Categories
-    cat_info = classify_drought_6_categories(target_pdsi)
+    # Classify into 4 Drought Categories
+    cat_info = classify_drought_4_categories(target_pdsi)
 
     return {
         "status": "success",
