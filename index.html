@@ -24,7 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
-<body>
+<body class="theme-aerial">
 
     <!-- ========================================================= -->
     <!-- TOP APP HEADER NAVBAR WITH TABS                           -->
@@ -70,9 +70,6 @@
                     <span class="sync-dot"></span>
                     <span id="sync-text">ONLINE</span>
                 </div>
-                <button id="btn-theme-toggle" class="btn-lang">
-                    <span id="theme-label">النسخة الفضائية</span>
-                </button>
                 <button id="btn-lang-toggle" class="btn-lang">
                     <span id="lang-label">English</span>
                 </button>
@@ -444,11 +441,11 @@
                     <div class="chart-panel-header">
                         <div>
                             <span class="label-caps">Time Series Trajectory</span>
-                            <h3 id="txt-chart-title">Asyut — PDSI Drought Trajectory & ConvLSTM Forecast</h3>
+                            <h3 id="txt-chart-title">Asyut — PDSI Drought Trajectory & CNN-Transformer Forecast</h3>
                         </div>
                         <div class="legend-item font-mono" style="font-size: 0.76rem;">
                             <span style="color: #2d7f9d; font-weight: 700;">■ Observed (1958–2020)</span> &nbsp;|&nbsp; 
-                            <span style="color: #ea580c; font-weight: 700;">■ ConvLSTM Forecast (95% CI)</span>
+                            <span style="color: #ea580c; font-weight: 700;">■ CNN-Transformer Forecast (95% CI)</span>
                         </div>
                     </div>
                     <div class="canvas-container" style="height: 440px;">
@@ -936,6 +933,6 @@
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=33.0"></script>
+    <script src="app.js?v=34.0"></script>
 </body>
 </html>

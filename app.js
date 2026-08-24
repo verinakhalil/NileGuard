@@ -477,8 +477,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (txtChartTitle) {
             txtChartTitle.textContent = currentLang === 'en'
-                ? `${st.name_en} — PDSI Drought Trajectory & ConvLSTM Forecast`
-                : `${st.name_ar} — مسار الجفاف وتنبؤات موديل ConvLSTM`;
+                ? `${st.name_en} — PDSI Drought Trajectory & CNN-Transformer Forecast`
+                : `${st.name_ar} — مسار الجفاف وتنبؤات موديل CNN-Transformer (4-Category AI Engine)`;
         }
 
         const labels = [];
@@ -1563,13 +1563,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnRunSim) {
         btnRunSim.addEventListener('click', async () => {
             btnRunSim.style.transform = 'scale(0.97)';
-            if (btnSimText) btnSimText.textContent = currentLang === 'en' ? 'Inferring via FastAPI...' : 'جارٍ الاستدلال عبر API...';
+            if (btnSimText) btnSimText.textContent = currentLang === 'en' ? 'Inferring via CNN-Transformer API...' : 'جارٍ الاستدلال عبر نموذج CNN-Transformer...';
             
             await fetchCnnTransformerInference(activeGov, currentHorizon);
             
             setTimeout(() => {
                 btnRunSim.style.transform = 'none';
-                if (btnSimText) btnSimText.textContent = currentLang === 'en' ? 'Run AI Inference' : 'تنفيذ الاستدلال الذكي';
+                if (btnSimText) btnSimText.textContent = currentLang === 'en' ? 'Run CNN-Transformer AI' : 'تنفيذ الاستدلال الذكي (CNN-Transformer)';
                 updateAllViews();
             }, 350);
         });
