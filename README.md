@@ -33,50 +33,7 @@
 6. **مقارنة معيارية مع دراسة البلتاجي (Elbeltagi et al. 2024 Table 2)**:
    - توضيح نسب التحسن في الـ RMSE (مثل $+58.5\%$ بالأقصر و $+54.1\%$ بالمنيا).
 
----
 
-## 🚀 طرق الاستضافة والرفع المجاني (1-Click Free Hosting)
-
-المشروع مبني بتقنيات الويب القياسية (HTML5 / Vanilla CSS / JavaScript / Leaflet / Chart.js) وهو خفيف وسريع جداً وجاهز للرفع الفوري على أي منصة استضافة مجانية:
-
-### 1️⃣ الرفع عبر GitHub Pages (أسهل وأسرع طريقة):
-1. أنشئي مستودع جديد على حسابك في GitHub (مثلاً: `nileguard-ai`).
-2. ارفعي ملفات المجلد إليه عبر الـ Git:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial NileGuard AI Platform release"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/nileguard-ai.git
-   git push -u origin main
-   ```
-3. من إعدادات المستودع (Settings) $\to$ اختاري **Pages** $\to$ اختاري الـ Source: **GitHub Actions**.
-4. سيعمل ملف الـ Workflow التلقائي الموجود في `.github/workflows/deploy.yml` وسينشر الموقع في أقل من دقيقة على رابط مباشر مثل:
-   `https://YOUR_USERNAME.github.io/nileguard-ai`
-
----
-
-### 2️⃣ الرفع عبر Vercel (خلال 30 ثانية):
-1. افتحي موقع [Vercel.com](https://vercel.com) وسجلي الدخول بحساب GitHub.
-2. اضغطي على **Add New Project** $\to$ واختاري مستودع `nileguard-ai`.
-3. اضغطي **Deploy** مباشرة (الملف `vercel.json` جاهز مسبقاً).
-4. ستحصلين فوراً على رابط رسمي وسريع مثل `https://nileguard-ai.vercel.app` مع شهادة أمان SSL مجانية.
-
----
-
-### 3️⃣ الرفع عبر Netlify (سحب وإفلات بدون أوامر):
-1. افتحي موقع [Netlify.com](https://netlify.com).
-2. اسحبي مجلد `nileguard_app` وأفلتيه في خانة **Drag & Drop your site folder**.
-3. سينشر الموقع فوراً في ثوانٍ معدودة!
-
----
-
-## 💻 التشغيل محلياً (Local Development)
-
-لتجربة الموقع على جهازك قبل الرفع:
-```powershell
-# باستخدام بايثون
-python -m http.server 8080
 
 # أو افتحي ملف index.html مباشرة في أي متصفح ويب حديث
 ```
