@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const lastActual = actualData[actualData.length - 1];
         predData[predData.length - 1] = lastActual;
 
-        const forecastMonths = ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12"];
+        const forecastMonths = ["2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11", "2026-12"];
         for (let h = 0; h < currentHorizon; h++) {
             labels.push(forecastMonths[h] || `2025-${h+1}`);
             actualData.push(null);
@@ -694,12 +694,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (playerRange) playerRange.value = currentHorizon;
         if (selectHorizonMonth) selectHorizonMonth.value = currentHorizon > 12 ? 12 : currentHorizon;
         
-        const monthNames = ["Jan 2021", "Feb 2021", "Mar 2021", "Apr 2021", "May 2021", "Jun 2021", "Jul 2021", "Aug 2021", "Sep 2021", "Oct 2021", "Nov 2021", "Dec 2021"];
+        const monthNamesEn = ["Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026", "May 2026", "Jun 2026", "Jul 2026", "Aug 2026", "Sep 2026", "Oct 2026", "Nov 2026", "Dec 2026"];
+        const monthNamesAr = ["يناير 2026", "فبراير 2026", "مارس 2026", "أبريل 2026", "مايو 2026", "يونيو 2026", "يوليو 2026", "أغسطس 2026", "سبتمبر 2026", "أكتوبر 2026", "نوفمبر 2026", "ديسمبر 2026"];
+        
+        const activeMonthStr = currentLang === 'en' 
+            ? (monthNamesEn[currentHorizon - 1] || '2026') 
+            : (monthNamesAr[currentHorizon - 1] || '2026');
+
         if (dispPlayerMonth) {
-            dispPlayerMonth.textContent = `Horizon: Month +${currentHorizon} (${monthNames[currentHorizon - 1] || '2021'})`;
+            dispPlayerMonth.textContent = `Horizon: Month +${currentHorizon} (${activeMonthStr})`;
         }
         if (txtHorizonNote) {
-            txtHorizonNote.textContent = `Horizon ends ${monthNames[currentHorizon - 1] || '2021'}`;
+            txtHorizonNote.textContent = `Horizon ends ${activeMonthStr}`;
         }
 
         updateAllViews();
