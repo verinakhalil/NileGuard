@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <!-- Main Stylesheet with cache busting -->
-    <link rel="stylesheet" href="styles.css?v=29.0">
+    <link rel="stylesheet" href="styles.css?v=30.0">
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="assets/nileguard_logo.jpg">
@@ -219,7 +219,6 @@
                     <div class="topbar-action">
                         <button id="btn-run-sim" class="btn-inference">
                             <span id="btn-sim-text">...Running inference</span>
-                            <span>⚡</span>
                         </button>
                     </div>
                 </div>
@@ -230,7 +229,6 @@
                     <div class="panel metric-box">
                         <div class="metric-header">
                             <span class="label-caps">Selected governorate</span>
-                            <span style="font-size: 1.1rem;">🗺️</span>
                         </div>
                         <div class="metric-value-row">
                             <span id="val-gov">Asyut</span>
@@ -240,9 +238,9 @@
                         
                         <!-- Dynamic Weather & Climate Strip -->
                         <div class="gov-weather-strip" id="gov-weather-strip">
-                            <span class="weather-chip" id="disp-temp">🌡️ 39°C حرارة صيفية</span>
-                            <span class="weather-chip" id="disp-wind">💨 رياح 14 كم/س</span>
-                            <span class="weather-chip" id="disp-et0" style="color: var(--severity-severe); font-weight: 700;">☀️ بخر عالي (8.2 مم/يوم)</span>
+                            <span class="weather-chip" id="disp-temp">39°C حرارة صيفية</span>
+                            <span class="weather-chip" id="disp-wind">رياح 14 كم/س</span>
+                            <span class="weather-chip" id="disp-et0" style="color: var(--severity-severe); font-weight: 700;">بخر عالي (8.2 مم/يوم)</span>
                         </div>
                     </div>
 
@@ -250,7 +248,6 @@
                     <div class="panel metric-box">
                         <div class="metric-header">
                             <span class="label-caps">PDSI Forecast (Palmer Index)</span>
-                            <span style="font-size: 1.1rem;">📉</span>
                         </div>
                         <div class="metric-value-row">
                             <span id="val-pdsi" style="direction: ltr; unicode-bidi: embed;">-1.78</span>
@@ -305,9 +302,9 @@
                                 
                                 <!-- Interactive Basemap Switcher -->
                                 <div class="map-basemap-switcher">
-                                    <button class="btn-basemap active" data-basemap="satellite" id="btn-base-sat">🛰️ قمر صناعي</button>
-                                    <button class="btn-basemap" data-basemap="terrain" id="btn-base-terrain">🗺️ تضاريس</button>
-                                    <button class="btn-basemap" data-basemap="dark" id="btn-base-dark">🌙 داكن</button>
+                                    <button class="btn-basemap active" data-basemap="satellite" id="btn-base-sat">قمر صناعي</button>
+                                    <button class="btn-basemap" data-basemap="terrain" id="btn-base-terrain">تضاريس</button>
+                                    <button class="btn-basemap" data-basemap="dark" id="btn-base-dark">داكن</button>
                                 </div>
 
                                 <div class="map-gradient-overlay" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 0.8rem 1rem; width: max-content; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
@@ -368,7 +365,7 @@
                         </div>
                         <div class="legend-item font-mono" style="font-size: 0.76rem;">
                             <span style="color: #2d7f9d; font-weight: 700;">■ Observed (1958–2024)</span> &nbsp;|&nbsp; 
-                            <span style="color: #ea580c; font-weight: 700;">■ Forecast (95% CI)</span>
+                            <span style="color: #ea580c; font-weight: 700;">■ Forecast</span>
                         </div>
                     </div>
                     <div class="canvas-container" style="height: 440px;">
@@ -389,7 +386,7 @@
                         <div>
                             <span class="label-caps">Smart Crop Intelligence</span>
                             <h3 style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700;" id="txt-crop-advisor-title">
-                                🌾 المرشد الزراعي الذكي — المحاصيل المقاومة للجفاف في أسيوط
+                                المرشد الزراعي الذكي — المحاصيل المقاومة للجفاف في أسيوط
                             </h3>
                             <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.3rem;" id="txt-crop-advisor-desc">
                                 توصيات زراعية ذكية موجهة للمزارعين ومهندسي الري مبنية على مؤشر الجفاف المتوقع (-1.82 Palmer)
@@ -408,7 +405,6 @@
                     <!-- Interactive AI Agronomic Advisor Hub Banner -->
                     <div class="crops-ai-hub-banner" id="crops-ai-hub-banner">
                         <div class="crops-ai-hub-left">
-                            <div class="crops-ai-hub-icon">🤖</div>
                             <div>
                                 <h4 class="crops-ai-hub-title" id="crops-hub-title">
                                     المساعد الزراعي الذكي المباشر (Powered by Gemini AI Engine)
@@ -419,8 +415,7 @@
                             </div>
                         </div>
                         <button class="crops-ai-hub-btn" id="btn-open-chatbot-hub">
-                            <span id="txt-crops-hub-btn">💬 فتح المحادثة الفورية مع المستشار الذكي</span>
-                            <span>⚡</span>
+                            <span id="txt-crops-hub-btn">فتح المحادثة الفورية مع المستشار الذكي</span>
                         </button>
                     </div>
                 </div>
@@ -428,7 +423,7 @@
         </div>
 
         <!-- ===================================================== -->
-        <!-- TAB 4: 💧 AGRI-ROI CALCULATOR & EXECUTIVE BULLETIN    -->
+        <!-- TAB 4: AGRI-ROI CALCULATOR & EXECUTIVE BULLETIN       -->
         <!-- ===================================================== -->
         <div class="tab-pane" id="tab-roi">
             <div class="secondary-modules-container" style="margin-top: 1.5rem;">
@@ -438,16 +433,15 @@
                     <div class="calc-header-row">
                         <div>
                             <span class="label-caps">Economic & Agronomic Intelligence</span>
-                            <h3 class="calc-title" id="txt-calc-title">💧 حاسبة الوفر المائي والجدوى الاقتصادية للفلاح المصري (Agri-ROI Calculator)</h3>
+                            <h3 class="calc-title" id="txt-calc-title">حاسبة الوفر المائي والجدوى الاقتصادية للفلاح المصري (Agri-ROI Calculator)</h3>
                             <p class="calc-subtitle" id="txt-calc-desc">احسب كمية المياه الموفرة سنوياً والعائد المالي المحقق عند تطبيق المقننات المائية المعتمدة وتوجيهات NileGuard الذكية</p>
                         </div>
                     </div>
 
                     <div class="calc-grid-layout">
                         <div class="calc-inputs-box">
-                            <div class="form-group">
                                 <label class="calc-label">
-                                    <span id="lbl-feddans">🌱 المساحة الزراعية المستهدفة:</span>
+                                    <span id="lbl-feddans">المساحة الزراعية المستهدفة:</span>
                                     <span id="disp-feddan-val" class="highlight-val">5 أفدنة (Feddans)</span>
                                 </label>
                                 <input type="range" id="range-feddans" min="1" max="50" value="5" class="calc-slider">
@@ -455,7 +449,7 @@
 
                             <div class="form-group">
                                 <label class="calc-label" id="lbl-scenario-select" style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.6rem;">
-                                    <span>🎯 سيناريو التحول الزراعي في <strong id="calc-active-gov-name" style="color: var(--gold); text-decoration: underline;">محافظة أسيوط</strong>:</span>
+                                    <span>سيناريو التحول الزراعي في <strong id="calc-active-gov-name" style="color: var(--gold); text-decoration: underline;">محافظة أسيوط</strong>:</span>
                                 </label>
                                 <select id="select-roi-scenario" class="calc-select">
                                     <!-- Populated dynamically based on active governorate -->
@@ -465,11 +459,11 @@
                             <!-- Comparison Quick Summary -->
                             <div id="roi-comparison-summary" style="background: #ffffff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 1.2rem; font-size: 0.92rem; color: var(--text-dark); line-height: 1.6; box-shadow: 0 4px 12px rgba(0,0,0,0.03); flex: 1; display: flex; flex-direction: column; justify-content: center;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle);">
-                                    <span id="lbl-old-flood" style="color: var(--severity-severe); font-weight: 800; font-size: 0.95rem;">🌾 الاستهلاك القديم (بالغمر):</span>
+                                    <span id="lbl-old-flood" style="color: var(--severity-severe); font-weight: 800; font-size: 0.95rem;">الاستهلاك القديم (بالغمر):</span>
                                     <span id="disp-curr-water" style="font-family: var(--font-mono); font-weight: 800; font-size: 1.05rem; color: var(--severity-severe);">3,400 م³/فدان</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle);">
-                                    <span id="lbl-rec-drip" style="color: #15803d; font-weight: 800; font-size: 0.95rem;">✨ الاستهلاك الموصى به (بالتنقيط):</span>
+                                    <span id="lbl-rec-drip" style="color: #15803d; font-weight: 800; font-size: 0.95rem;">الاستهلاك الموصى به (بالتنقيط):</span>
                                     <span id="disp-target-water" style="font-family: var(--font-mono); font-weight: 800; font-size: 1.05rem; color: #15803d;">2,300 م³/فدان (وفر 32%)</span>
                                 </div>
                                 <div id="disp-scenario-reason" style="font-size: 0.88rem; font-weight: 700; color: var(--text-dark); line-height: 1.6;">
@@ -478,7 +472,7 @@
                             </div>
 
                             <div id="lbl-arc-source" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600; font-family: var(--font-mono); margin-top: 0.2rem;">
-                                📚 المصدر: المقننات المائية المعتمدة لوزارة الموارد المائية والري ومركز البحوث الزراعية (ARC 2024)
+                                المصدر: المقننات المائية المعتمدة لوزارة الموارد المائية والري ومركز البحوث الزراعية (ARC 2024)
                             </div>
                         </div>
 
@@ -492,7 +486,7 @@
                                     </div>
                                 </div>
                                 <div class="tank-details-info">
-                                    <div class="tank-pct-badge" id="tank-pct-text">🌊 32% وفر مائي استراتيجي</div>
+                                    <div class="tank-pct-badge" id="tank-pct-text">32% وفر مائي استراتيجي</div>
                                     <div style="font-size: 0.88rem; font-weight: 800; color: var(--text-dark);" id="tank-vol-title">
                                         حجم المياه المحمية من الهدر
                                     </div>
@@ -504,19 +498,19 @@
 
                             <div class="res-cards-row">
                                 <div class="res-card res-water">
-                                    <div class="res-label" id="lbl-res-water-title">💧 الوفر المائي السنوي الإجمالي</div>
+                                    <div class="res-label" id="lbl-res-water-title">الوفر المائي السنوي الإجمالي</div>
                                     <div class="res-val" id="res-water-val">5,500 <span class="res-unit">م³ / موسم</span></div>
                                     <div class="res-note" id="res-water-note">وفر يعادل تأمين مياه شرب لـ 14 أسرة مصرية سنوياً</div>
                                 </div>
 
                                 <div class="res-card res-money">
-                                    <div class="res-label" id="lbl-res-money-title">💰 الوفر المالي وتكلفة طاقة الري</div>
+                                    <div class="res-label" id="lbl-res-money-title">الوفر المالي وتكلفة طاقة الري</div>
                                     <div class="res-val" id="res-money-val">12,100 <span class="res-unit">جنيه مصري</span></div>
                                     <div class="res-note" id="lbl-res-money-note">خفض استهلاك السولار والكهرباء والأسمدة المنجرفة مع مياه الغمر</div>
                                 </div>
 
                                 <div class="res-card res-resilience">
-                                    <div class="res-label" id="lbl-res-shield-title">🛡️ مؤشر الحماية والأمان المناخي</div>
+                                    <div class="res-label" id="lbl-res-shield-title">مؤشر الحماية والأمان المناخي</div>
                                     <div class="res-val" id="res-shield-val">+54% <span class="res-unit">مقاومة إجهاد حراري</span></div>
                                     <div class="res-note" id="lbl-res-shield-note">حماية إنتاجية الفدان من التراجع أثناء شهور الجفاف المتوقعة بمؤشر PDSI</div>
                                 </div>
@@ -529,7 +523,6 @@
                 <div class="panel" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--bg-parchment); border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-panel);">
                     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.8rem; margin-bottom: 1rem;">
                         <div style="display: flex; align-items: center; gap: 0.6rem;">
-                            <span style="font-size: 1.4rem;">📚</span>
                             <div>
                                 <h4 style="font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; color: var(--text-dark);" id="txt-ref-section-title">
                                     المراجع والدراسات العلمية الرسمية المعتمدة (Certified Official References)
@@ -586,17 +579,12 @@
                 <!-- 3. EXECUTIVE BULLETIN TRIGGER BAR -->
                 <div class="bulletin-trigger-container">
                     <button id="btn-open-bulletin" class="btn-executive-bulletin">
-                        <span>🏛️ إصدار النشرة التحذيرية القومية الرسمية للمحافظة (Executive Bulletin PDF)</span>
-                        <span>📥</span>
+                        <span>إصدار النشرة التحذيرية القومية الرسمية للمحافظة (Executive Bulletin PDF)</span>
                     </button>
                 </div>
 
             </div>
         </div>
-
-        <!-- ===================================================== -->
-        <!-- TAB 5: 📜 REPORTS & EXECUTIVE BULLETINS               -->
-        <!-- ===================================================== -->
     </div>
 
     </div>
@@ -643,7 +631,7 @@
 
             <div style="background: var(--bg-parchment); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.2rem; margin-bottom: 1.5rem;">
                 <h4 style="font-family: var(--font-serif); font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.6rem;">
-                    📋 التوجيهات والإجراءات الفورية لمديريات الري والزراعة:
+                    التوجيهات والإجراءات الفورية لمديريات الري والزراعة:
                 </h4>
                 <ul style="padding-right: 1.2rem; font-size: 0.84rem; line-height: 1.8; color: var(--text-dark);" id="bulletin-directives-list">
                     <li>تعديل مناوبات الري وجداول تصرفات الترع الرئيسية لتفادي فترات الذروة الحرارية.</li>
@@ -658,7 +646,7 @@
                     تاريخ الإصدار: 2026/08/15 · رقم الوثيقة: NG-EGY-2026-08
                 </div>
                 <button onclick="window.print()" class="btn-player-play" style="padding: 0.5rem 1.2rem;">
-                    <span>طباعة النشرة الرسمية 🖨️</span>
+                    <span>طباعة النشرة الرسمية</span>
                 </button>
             </div>
         </div>
@@ -670,12 +658,11 @@
     <!-- Floating Launcher Button (FAB) -->
     <button class="floating-chatbot-launcher" id="btn-chatbot-launcher" title="Open AI Agronomic Chatbot">
         <div class="chatbot-launcher-avatar">
-            <span>🤖</span>
             <span class="online-pulse"></span>
         </div>
         <div class="chatbot-launcher-text">
             <span class="chatbot-launcher-title" id="txt-launcher-title">المستشار الزراعي الذكي</span>
-            <span class="chatbot-launcher-sub" id="txt-launcher-sub">✨ Gemini AI Active</span>
+            <span class="chatbot-launcher-sub" id="txt-launcher-sub">Gemini AI Active</span>
         </div>
     </button>
 
@@ -684,9 +671,6 @@
         <!-- Chatbot Header -->
         <div class="chatbot-header">
             <div class="chatbot-header-info">
-                <div class="chatbot-launcher-avatar" style="width: 32px; height: 32px; font-size: 1.05rem;">
-                    <span>🤖</span>
-                </div>
                 <div>
                     <h4 class="chatbot-header-title" id="txt-chat-header-title">NileGuard Agronomic Advisor</h4>
                     <div class="chatbot-header-status">
@@ -703,30 +687,29 @@
 
         <!-- Chatbot Active Context Banner -->
         <div class="chatbot-context-banner">
-            <span id="chat-active-gov-label">📍 المحافظة الحالية: <strong id="chat-gov-name-bold">أسيوط</strong></span>
+            <span id="chat-active-gov-label">المحافظة الحالية: <strong id="chat-gov-name-bold">أسيوط</strong></span>
             <span class="chatbot-context-pill" id="chat-active-pdsi-pill">PDSI: -1.78</span>
         </div>
 
         <!-- Quick Suggestions Horizontal Scroll -->
         <div class="chatbot-chips-scroll" id="chatbot-chips-scroll">
             <button class="chatbot-quick-chip chat-chip" data-prompt="ما هي أفضل أصناف القمح المقاومة للجفاف في محافظة أسيوط؟">
-                🌾 أصناف القمح المقاومة؟
+                أصناف القمح المقاومة؟
             </button>
             <button class="chatbot-quick-chip chat-chip" data-prompt="كيف أتعامل مع نقص مياه الري في الصعيد خلال الصيف؟">
-                💧 التعامل مع نقص مياه الري؟
+                التعامل مع نقص مياه الري؟
             </button>
             <button class="chatbot-quick-chip chat-chip" data-prompt="ما هي مواعيد وطرق ري الرمان المنفلوطي في أسيوط؟">
-                🍎 ري وزراعة الرمان؟
+                ري وزراعة الرمان؟
             </button>
             <button class="chatbot-quick-chip chat-chip" data-prompt="ما هو البديل الموفر للمياه لقصب السكر في الأقصر وقنا؟">
-                🥔 بدائل قصب السكر؟
+                بدائل قصب السكر؟
             </button>
         </div>
 
         <!-- Chatbot Messages Body -->
         <div class="chatbot-messages-body" id="chat-messages">
             <div class="chatbot-msg-bubble msg-ai">
-                <div style="font-size: 1.25rem;">🤖</div>
                 <div class="chatbot-bubble-text" id="chat-welcome-bubble">
                     أهلاً بك! أنا مستشارك الزراعي الذكي لمنظومة <strong>NileGuard</strong>. يمكنك سؤالي عن أنسب المحاصيل للمحافظة المحددة حالياً، أو استفسارات الري والتسميد وتأثير مؤشر الجفاف على أراضيك الزراعية. كيف يمكنني مساعدتك؟
                 </div>
@@ -739,13 +722,12 @@
                 <input type="text" id="chat-input" class="chatbot-input-field" placeholder="اكتب سؤالك الزراعي هنا..." required autocomplete="off">
                 <button type="submit" class="chatbot-btn-send" id="btn-chat-send">
                     <span id="txt-btn-chat-send">إرسال</span>
-                    <span>🚀</span>
                 </button>
             </form>
         </div>
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=41.0"></script>
+    <script src="app.js?v=42.0"></script>
 </body>
 </html>

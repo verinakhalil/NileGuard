@@ -401,9 +401,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const dispTemp = document.getElementById('disp-temp');
         const dispWind = document.getElementById('disp-wind');
         const dispEt0 = document.getElementById('disp-et0');
-        if (dispTemp) dispTemp.textContent = currentLang === 'en' ? `🌡️ ${clim.temp_en} Summer Temp` : `🌡️ ${clim.temp} حرارة صيفية`;
-        if (dispWind) dispWind.textContent = currentLang === 'en' ? `💨 Wind ${clim.wind_en}` : `💨 رياح ${clim.wind}`;
-        if (dispEt0) dispEt0.textContent = currentLang === 'en' ? `☀️ High ET0 (${clim.et0_en})` : `☀️ بخر عالي (${clim.et0})`;
+        if (dispTemp) dispTemp.textContent = currentLang === 'en' ? `${clim.temp_en} Summer Temp` : `${clim.temp} حرارة صيفية`;
+        if (dispWind) dispWind.textContent = currentLang === 'en' ? `Wind ${clim.wind_en}` : `رياح ${clim.wind}`;
+        if (dispEt0) dispEt0.textContent = currentLang === 'en' ? `High ET0 (${clim.et0_en})` : `بخر عالي (${clim.et0})`;
 
         // 2. PDSI Forecast
         if (valPdsi) valPdsi.textContent = (forecastPdsi > 0 ? "+" : "") + forecastPdsi.toFixed(2);
@@ -1179,18 +1179,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (btnTabCrops) btnTabCrops.innerHTML = '<span>المرشد الذكي</span> <span class="tab-badge badge-ai">AI</span>';
             if (btnTabRoi) btnTabRoi.innerHTML = '<span>حاسبة الجدوى</span>';
             if (appSloganHeader) appSloganHeader.textContent = 'نستبق الجفاف.. لأمان النيل ونماء الأرض';
-            if (heroSloganBadge) heroSloganBadge.innerHTML = '<span>🌱 نستبق الجفاف.. لأمان النيل ونماء الأرض</span>';
+            if (heroSloganBadge) heroSloganBadge.innerHTML = '<span>نستبق الجفاف.. لأمان النيل ونماء الأرض</span>';
             if (footerSloganBar) footerSloganBar.textContent = 'NileGuard AI Platform · « نستبق الجفاف.. لأمان النيل ونماء الأرض » · Arab Republic of Egypt 2026';
             if (bulletinSloganText) bulletinSloganText.textContent = 'منظومة NileGuard · « نستبق الجفاف.. لأمان النيل ونماء الأرض »';
 
             // Chatbot Widget Arabic
             if (txtLauncherTitle) txtLauncherTitle.textContent = 'المستشار الزراعي الذكي';
-            if (txtLauncherSub) txtLauncherSub.textContent = '✨ Gemini AI Active';
+            if (txtLauncherSub) txtLauncherSub.textContent = 'Gemini AI Active';
             if (txtChatHeaderTitle) txtChatHeaderTitle.textContent = 'NileGuard مستشارك الزراعي الذكي';
             if (txtChatStatus) txtChatStatus.textContent = 'محرك Gemini الذكي نشط';
             if (cropsHubTitle) cropsHubTitle.textContent = 'المساعد الزراعي الذكي المباشر (Powered by Gemini AI Engine)';
             if (cropsHubDesc) cropsHubDesc.textContent = 'استشر الذكاء الاصطناعي التوليدي في التوصيات المحصولية، جداول الري، واستراتيجيات التكيف مع الجفاف لمحافظتك.';
-            if (txtCropsHubBtn) txtCropsHubBtn.textContent = '💬 فتح المحادثة الفورية مع المستشار الذكي';
+            if (txtCropsHubBtn) txtCropsHubBtn.textContent = 'فتح المحادثة الفورية مع المستشار الذكي';
             if (txtBtnChatSend) txtBtnChatSend.textContent = 'إرسال';
             if (chatInputEl) chatInputEl.placeholder = 'اكتب سؤالك الزراعي هنا...';
             if (cropCountBadge) cropCountBadge.textContent = '4 محاصيل موصى بها';
@@ -1207,10 +1207,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 "ما هو البديل الموفر للمياه لقصب السكر في الأقصر وقنا؟"
             ];
             const promptLabelsAr = [
-                "🌾 أصناف القمح المقاومة؟",
-                "💧 التعامل مع نقص مياه الري؟",
-                "🍎 ري وزراعة الرمان؟",
-                "🥔 بدائل قصب السكر؟"
+                "أصناف القمح المقاومة؟",
+                "التعامل مع نقص مياه الري؟",
+                "ري وزراعة الرمان؟",
+                "بدائل قصب السكر؟"
             ];
             chatChipEls.forEach((ch, idx) => {
                 if (promptChipsAr[idx]) {
@@ -1221,8 +1221,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Dashboard
             if (txtForecastParams) txtForecastParams.textContent = 'معايير الاستدلال والتنبؤ';
-            if (txtForecastMonth) txtForecastMonth.textContent = '📅 المدى الزمني:';
-            if (txtGovsTitle) txtGovsTitle.textContent = '📍 المحافظات:';
+            if (txtForecastMonth) txtForecastMonth.textContent = 'المدى الزمني:';
+            if (txtGovsTitle) txtGovsTitle.textContent = 'المحافظات:';
             if (btnSelectAllEl) btnSelectAllEl.textContent = 'الكل';
             if (btnSelectNoneEl) btnSelectNoneEl.textContent = 'المحددة';
             if (btnSimText) btnSimText.textContent = 'تنفيذ الاستدلال الذكي';
@@ -1230,15 +1230,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (playerLabel) playerLabel.textContent = isPlaying ? 'إيقاف مؤقت' : 'محاكاة 4D';
             if (txtRankedTitle) txtRankedTitle.textContent = 'ترتيب الخطورة';
             if (thGov) thGov.textContent = 'المحافظة';
-            if (btnBaseSat) btnBaseSat.textContent = '🛰️ قمر صناعي';
-            if (btnBaseTerrain) btnBaseTerrain.textContent = '🗺️ تضاريس';
-            if (btnBaseDark) btnBaseDark.textContent = '🌙 داكن';
+            if (btnBaseSat) btnBaseSat.textContent = 'قمر صناعي';
+            if (btnBaseTerrain) btnBaseTerrain.textContent = 'تضاريس';
+            if (btnBaseDark) btnBaseDark.textContent = 'داكن';
 
             // ROI
-            if (txtCalcTitle) txtCalcTitle.textContent = '💧 حاسبة الوفر المائي والجدوى الاقتصادية للفلاح المصري (Agri-ROI Calculator)';
+            if (txtCalcTitle) txtCalcTitle.textContent = 'حاسبة الوفر المائي والجدوى الاقتصادية للفلاح المصري (Agri-ROI Calculator)';
             if (txtCalcDesc) txtCalcDesc.textContent = 'احسب كمية المياه الموفرة سنوياً والعائد المالي المحقق عند تطبيق المقننات المائية المعتمدة وتوجيهات NileGuard الذكية';
-            if (btnVoiceBriefEl) btnVoiceBriefEl.innerHTML = '<span>🔊 استمع للإرشاد الصوتي (Voice Brief)</span>';
-            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>📥 تحميل التقرير التنفيذي PDF</span>';
+            if (btnVoiceBriefEl) btnVoiceBriefEl.innerHTML = '<span>استمع للإرشاد الصوتي (Voice Brief)</span>';
+            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>تحميل التقرير التنفيذي PDF</span>';
             const txtBtnReportsDownloadAr = document.getElementById('txt-btn-reports-download');
             if (txtBtnReportsDownloadAr) txtBtnReportsDownloadAr.textContent = 'تحميل التقرير التنفيذي PDF';
             const txtReportTitleAr = document.getElementById('txt-report-title');
@@ -1257,15 +1257,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             const lblResShieldTitle = document.getElementById('lbl-res-shield-title');
             const lblResShieldNote = document.getElementById('lbl-res-shield-note');
 
-            if (lblFeddans) lblFeddans.textContent = '🌱 المساحة الزراعية المستهدفة:';
-            if (lblOldFlood) lblOldFlood.textContent = '🌾 الاستهلاك القديم بالغمر:';
-            if (lblRecDrip) lblRecDrip.textContent = '✨ الاستهلاك الموصى به بالتنقيط:';
-            if (lblArcSource) lblArcSource.textContent = '📚 المصدر: المقننات المائية المعتمدة لوزارة الموارد المائية والري ومركز البحوث الزراعية (ARC 2024)';
+            if (lblFeddans) lblFeddans.textContent = 'المساحة الزراعية المستهدفة:';
+            if (lblOldFlood) lblOldFlood.textContent = 'الاستهلاك القديم بالغمر:';
+            if (lblRecDrip) lblRecDrip.textContent = 'الاستهلاك الموصى به بالتنقيط:';
+            if (lblArcSource) lblArcSource.textContent = 'المصدر: المقننات المائية المعتمدة لوزارة الموارد المائية والري ومركز البحوث الزراعية (ARC 2024)';
             if (lblTankDesc) lblTankDesc.textContent = 'توفير مياه عالي الكفاءة يقلل الضغط على الخزانات الجوفية وشبكات الترع بصعيد مصر.';
-            if (lblResWaterTitle) lblResWaterTitle.textContent = '💧 الوفر المائي السنوي الإجمالي';
-            if (lblResMoneyTitle) lblResMoneyTitle.textContent = '💰 الوفر المالي وتكلفة طاقة الري';
+            if (lblResWaterTitle) lblResWaterTitle.textContent = 'الوفر المائي السنوي الإجمالي';
+            if (lblResMoneyTitle) lblResMoneyTitle.textContent = 'الوفر المالي وتكلفة طاقة الري';
             if (lblResMoneyNote) lblResMoneyNote.textContent = 'خفض استهلاك السولار والكهرباء والأسمدة المنجرفة مع مياه الغمر';
-            if (lblResShieldTitle) lblResShieldTitle.textContent = '🛡️ مؤشر الحماية والأمان من موجات الجفاف';
+            if (lblResShieldTitle) lblResShieldTitle.textContent = 'مؤشر الحماية والأمان من موجات الجفاف';
             if (lblResShieldNote) lblResShieldNote.textContent = 'حماية إنتاجية الفدان من التراجع أثناء شهور الجفاف المتوقعة بمؤشر PDSI';
 
             // References Arabic
@@ -1321,18 +1321,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (btnTabCrops) btnTabCrops.innerHTML = '<span>AI Advisor</span> <span class="tab-badge badge-ai">AI</span>';
             if (btnTabRoi) btnTabRoi.innerHTML = '<span>Agri-ROI Calculator</span>';
             if (appSloganHeader) appSloganHeader.textContent = 'Ahead of Drought: Securing the Nile, Sustaining the Land';
-            if (heroSloganBadge) heroSloganBadge.innerHTML = '<span>🌱 Ahead of Drought: Securing the Nile, Sustaining the Land</span>';
+            if (heroSloganBadge) heroSloganBadge.innerHTML = '<span>Ahead of Drought: Securing the Nile, Sustaining the Land</span>';
             if (footerSloganBar) footerSloganBar.textContent = 'NileGuard AI Platform · "Ahead of Drought: Securing the Nile, Sustaining the Land" · Arab Republic of Egypt 2026';
             if (bulletinSloganText) bulletinSloganText.textContent = 'NileGuard System · "Ahead of Drought: Securing the Nile, Sustaining the Land"';
 
             // Chatbot Widget English
             if (txtLauncherTitle) txtLauncherTitle.textContent = 'AI Agronomic Advisor';
-            if (txtLauncherSub) txtLauncherSub.textContent = '✨ Gemini AI Active';
+            if (txtLauncherSub) txtLauncherSub.textContent = 'Gemini AI Active';
             if (txtChatHeaderTitle) txtChatHeaderTitle.textContent = 'NileGuard AI Agronomic Advisor';
             if (txtChatStatus) txtChatStatus.textContent = 'Gemini AI Engine Active';
             if (cropsHubTitle) cropsHubTitle.textContent = 'Live Agricultural AI Assistant (Powered by Gemini AI Engine)';
             if (cropsHubDesc) cropsHubDesc.textContent = 'Ask Generative AI for customized crop varieties, precision irrigation quotas, and climate adaptation strategies.';
-            if (txtCropsHubBtn) txtCropsHubBtn.textContent = '💬 Open Live AI Chatbot Assistant';
+            if (txtCropsHubBtn) txtCropsHubBtn.textContent = 'Open Live AI Chatbot Assistant';
             if (txtBtnChatSend) txtBtnChatSend.textContent = 'Send';
             if (chatInputEl) chatInputEl.placeholder = 'Ask your agricultural question here (e.g. wheat varieties, irrigation quotas)...';
             if (cropCountBadge) cropCountBadge.textContent = '4 Recommended Crops';
@@ -1349,10 +1349,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 "What are the water-saving alternatives to sugarcane in Luxor and Qena?"
             ];
             const promptLabelsEn = [
-                "🌾 Resilient Wheat Varieties?",
-                "💧 Managing Water Deficits?",
-                "🍎 Pomegranate Irrigation?",
-                "🥔 Sugarcane Alternatives?"
+                "Resilient Wheat Varieties?",
+                "Managing Water Deficits?",
+                "Pomegranate Irrigation?",
+                "Sugarcane Alternatives?"
             ];
             chatChipEls.forEach((ch, idx) => {
                 if (promptChipsEn[idx]) {
@@ -1363,8 +1363,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Dashboard
             if (txtForecastParams) txtForecastParams.textContent = 'Forecast Parameters';
-            if (txtForecastMonth) txtForecastMonth.textContent = '📅 Horizon:';
-            if (txtGovsTitle) txtGovsTitle.textContent = '📍 Governorates:';
+            if (txtForecastMonth) txtForecastMonth.textContent = 'Horizon:';
+            if (txtGovsTitle) txtGovsTitle.textContent = 'Governorates:';
             if (btnSelectAllEl) btnSelectAllEl.textContent = 'All';
             if (btnSelectNoneEl) btnSelectNoneEl.textContent = 'None';
             if (btnSimText) btnSimText.textContent = 'Run AI Inference';
@@ -1372,15 +1372,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (playerLabel) playerLabel.textContent = isPlaying ? 'Pause Sim' : '4D Simulation';
             if (txtRankedTitle) txtRankedTitle.textContent = 'Ranked Risk';
             if (thGov) thGov.textContent = 'Governorate';
-            if (btnBaseSat) btnBaseSat.textContent = '🛰️ Satellite';
-            if (btnBaseTerrain) btnBaseTerrain.textContent = '🗺️ Terrain';
-            if (btnBaseDark) btnBaseDark.textContent = '🌙 Dark';
+            if (btnBaseSat) btnBaseSat.textContent = 'Satellite';
+            if (btnBaseTerrain) btnBaseTerrain.textContent = 'Terrain';
+            if (btnBaseDark) btnBaseDark.textContent = 'Dark';
 
             // ROI
-            if (txtCalcTitle) txtCalcTitle.textContent = '💧 Smart Agri-Water & Economic ROI Calculator (Agri-ROI)';
+            if (txtCalcTitle) txtCalcTitle.textContent = 'Smart Agri-Water & Economic ROI Calculator (Agri-ROI)';
             if (txtCalcDesc) txtCalcDesc.textContent = 'Calculate annual water volume saved and financial returns under certified water quotas and NileGuard AI advisories.';
-            if (btnVoiceBriefEl) btnVoiceBriefEl.innerHTML = '<span>🔊 Listen to AI Voice Brief</span>';
-            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>📥 Download Executive Report (PDF)</span>';
+            if (btnVoiceBriefEl) btnVoiceBriefEl.innerHTML = '<span>Listen to AI Voice Brief</span>';
+            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>Download Executive Report (PDF)</span>';
             const txtBtnReportsDownloadEn = document.getElementById('txt-btn-reports-download');
             if (txtBtnReportsDownloadEn) txtBtnReportsDownloadEn.textContent = 'Download Executive Report (PDF)';
             const txtReportTitleEn = document.getElementById('txt-report-title');
@@ -1399,15 +1399,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             const lblResShieldTitleEn = document.getElementById('lbl-res-shield-title');
             const lblResShieldNoteEn = document.getElementById('lbl-res-shield-note');
 
-            if (lblFeddansEn) lblFeddansEn.textContent = '🌱 Target Agricultural Area:';
-            if (lblOldFloodEn) lblOldFloodEn.textContent = '🌾 Conventional Flood Irrigation:';
-            if (lblRecDripEn) lblRecDripEn.textContent = '✨ Recommended Drip Irrigation:';
-            if (lblArcSourceEn) lblArcSourceEn.textContent = '📚 Source: Certified Water Quotas by Ministry of Water Resources & Agricultural Research Center (ARC 2024)';
+            if (lblFeddansEn) lblFeddansEn.textContent = 'Target Agricultural Area:';
+            if (lblOldFloodEn) lblOldFloodEn.textContent = 'Conventional Flood Irrigation:';
+            if (lblRecDripEn) lblRecDripEn.textContent = 'Recommended Drip Irrigation:';
+            if (lblArcSourceEn) lblArcSourceEn.textContent = 'Source: Certified Water Quotas by Ministry of Water Resources & Agricultural Research Center (ARC 2024)';
             if (lblTankDescEn) lblTankDescEn.textContent = 'High-efficiency irrigation reduces pressure on deep aquifers and canal networks across Upper Egypt.';
-            if (lblResWaterTitleEn) lblResWaterTitleEn.textContent = '💧 Total Annual Water Volume Saved';
-            if (lblResMoneyTitleEn) lblResMoneyTitleEn.textContent = '💰 Direct Energy & Irrigation Financial Savings';
+            if (lblResWaterTitleEn) lblResWaterTitleEn.textContent = 'Total Annual Water Volume Saved';
+            if (lblResMoneyTitleEn) lblResMoneyTitleEn.textContent = 'Direct Energy & Irrigation Financial Savings';
             if (lblResMoneyNoteEn) lblResMoneyNoteEn.textContent = 'Lower diesel fuel, electricity, and fertilizer runoff costs';
-            if (lblResShieldTitleEn) lblResShieldTitleEn.textContent = '🛡️ Climate & Heat-Stress Resilience Index';
+            if (lblResShieldTitleEn) lblResShieldTitleEn.textContent = 'Climate & Heat-Stress Resilience Index';
             if (lblResShieldNoteEn) lblResShieldNoteEn.textContent = 'Yield protection against heat stress during predicted drought months';
 
             // References English
@@ -1701,7 +1701,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         typingDiv.id = typingId;
         typingDiv.className = 'chatbot-msg-bubble msg-ai';
         typingDiv.innerHTML = `
-            <div style="font-size: 1.15rem;">🤖</div>
             <div class="chatbot-bubble-text" style="color: var(--text-muted); font-size: 0.76rem; font-family: var(--font-mono); display: flex; align-items: center; gap: 0.4rem;">
                 <span>${currentLang === 'en' ? 'Analyzing query & climate data...' : 'جارٍ تحليل الاستفسار والبيانات المناخية...'}</span>
                 <span class="sync-dot" style="display: inline-block;"></span>
@@ -1728,41 +1727,41 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (currentLang === 'en') {
                 if (isGreeting) {
-                    answer = `Hello! 👋 I am your <strong>NileGuard AI Advisor</strong> for <strong>${st.name_en}</strong> (PDSI Drought Forecast = ${pdsiVal.toFixed(2)}).<br><br>How can I help you today? You can ask me about:<br>• Resilient wheat & crop varieties<br>• Irrigation schedules & water saving<br>• Sugarcane & pomegranate recommendations`;
+                    answer = `Hello! I am your <strong>NileGuard AI Advisor</strong> for <strong>${st.name_en}</strong> (PDSI Drought Forecast = ${pdsiVal.toFixed(2)}).<br><br>How can I help you today? You can ask me about:<br>• Resilient wheat & crop varieties<br>• Irrigation schedules & water saving<br>• Sugarcane & pomegranate recommendations`;
                 } else if (isThanks) {
-                    answer = `You're very welcome! 🌾 I am always here to help you optimize irrigation and boost crop resilience across Upper Egypt. Let me know if you have any more questions!`;
+                    answer = `You're very welcome! I am always here to help you optimize irrigation and boost crop resilience across Upper Egypt. Let me know if you have any more questions!`;
                 } else if (isHelp) {
                     answer = `I am <strong>NileGuard AI Advisor</strong> — an intelligent agronomic system powered by satellite TerraClimate data.<br><br>I provide actionable advice on crop selection, deficit irrigation, and water conservation for 8 Upper Egypt governorates.`;
                 } else if (q.includes('wheat') || q.includes('sakha') || q.includes('misr')) {
-                    answer = `🌾 <strong>Wheat Cultivation Advisories for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>Resilient Varieties:</strong> Sakha 95, Misr 3, Sids 14.<br>• <strong>Planting Window:</strong> Nov 15 – Dec 5.<br>• <strong>Water Need:</strong> 2,400 m³/feddan with laser land leveling.`;
+                    answer = `<strong>Wheat Cultivation Advisories for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>Resilient Varieties:</strong> Sakha 95, Misr 3, Sids 14.<br>• <strong>Planting Window:</strong> Nov 15 – Dec 5.<br>• <strong>Water Need:</strong> 2,400 m³/feddan with laser land leveling.`;
                 } else if (q.includes('sugar') || q.includes('cane') || q.includes('beet')) {
-                    answer = `🥔 <strong>Sugarcane Alternatives for ${st.name_en}:</strong><br>• <strong>Sugar Beet:</strong> Saves >70% water (3,200 m³/feddan).<br>• <strong>Drip Seedling Sugarcane:</strong> Reduces water use to 6,000 m³/feddan.`;
+                    answer = `<strong>Sugarcane Alternatives for ${st.name_en}:</strong><br>• <strong>Sugar Beet:</strong> Saves >70% water (3,200 m³/feddan).<br>• <strong>Drip Seedling Sugarcane:</strong> Reduces water use to 6,000 m³/feddan.`;
                 } else if (q.includes('pomegranate') || q.includes('manfalut')) {
-                    answer = `🍎 <strong>Manfaluti Pomegranate in ${st.name_en}:</strong><br>• Quota: 2,800–3,200 m³/feddan.<br>• Apply mulching and early morning drip cycles to prevent fruit cracking.`;
+                    answer = `<strong>Manfaluti Pomegranate in ${st.name_en}:</strong><br>• Quota: 2,800–3,200 m³/feddan.<br>• Apply mulching and early morning drip cycles to prevent fruit cracking.`;
                 } else if (q.includes('irrigation') || q.includes('water') || q.includes('deficit')) {
-                    answer = `💧 <strong>Irrigation Action Plan for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>1. Night/early morning drip irrigation (cuts evaporation by 25%).<br>2. Regulated deficit irrigation during non-critical growth stages.<br>3. Pipeline conveyance instead of open ditches.`;
+                    answer = `<strong>Irrigation Action Plan for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>1. Night/early morning drip irrigation (cuts evaporation by 25%).<br>2. Regulated deficit irrigation during non-critical growth stages.<br>3. Pipeline conveyance instead of open ditches.`;
                 } else {
-                    answer = `🌾 <strong>Agronomic Guidance for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>Soil Type:</strong> ${st.soil_type_en}.<br>• <strong>Key Crops:</strong> ${st.primary_agriculture_en}.<br>• Recommend drip irrigation with supplemental potassium to mitigate heat stress.`;
+                    answer = `<strong>Agronomic Guidance for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>Soil Type:</strong> ${st.soil_type_en}.<br>• <strong>Key Crops:</strong> ${st.primary_agriculture_en}.<br>• Recommend drip irrigation with supplemental potassium to mitigate heat stress.`;
                 }
             } else {
                 if (isGreeting) {
-                    answer = `أهلاً بك! 👋 أنا مستشارك الزراعي الذكي لمحافظة <strong>${st.name_ar}</strong> (مؤشر التنبؤ بالجفاف PDSI = ${pdsiVal.toFixed(2)}).<br><br>كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن:<br>• أفضل أصناف القمح المقاومة للجفاف<br>• جداول الري بالتنقيط وترشيد المياه<br>• بدائل قصب السكر وبساتين الرمان`;
+                    answer = `أهلاً بك! أنا مستشارك الزراعي الذكي لمحافظة <strong>${st.name_ar}</strong> (مؤشر التنبؤ بالجفاف PDSI = ${pdsiVal.toFixed(2)}).<br><br>كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن:<br>• أفضل أصناف القمح المقاومة للجفاف<br>• جداول الري بالتنقيط وترشيد المياه<br>• بدائل قصب السكر وبساتين الرمان`;
                 } else if (isThanks) {
-                    answer = `العفو! 🌿 أنا دائمًا في خدمتك لحماية المحاصيل وترشيد مياه الري بمحافظة <strong>${st.name_ar}</strong>. يسعدني الإجابة عن أي استفسار آخر!`;
+                    answer = `العفو! أنا دائمًا في خدمتك لحماية المحاصيل وترشيد مياه الري بمحافظة <strong>${st.name_ar}</strong>. يسعدني الإجابة عن أي استفسار آخر!`;
                 } else if (isHelp) {
                     answer = `أنا <strong>مستشار NileGuard الذكي</strong> — منظومة ذكاء اصطناعي مناخية تعتمد على بيانات TerraClimate الفضائية والنماذج القومية للمقننات المائية.<br><br>أقدم لك توصيات دقيقة لزراعة المحاصيل والري المناسب لمحافظات صعيد مصر.`;
                 } else if (q.includes('قمح') || q.includes('wheat') || q.includes('سخا') || q.includes('مصر 3')) {
-                    answer = `🌾 <strong>توصيات القمح لمحافظة ${st.name_ar} (مؤشر PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>الأصناف المقاومة:</strong> سخا 95، مصر 3، سدس 14.<br>• <strong>ميعاد الزراعة:</strong> من 15 نوفمبر حتى 5 ديسمبر لتفادي الإجهاد الحراري.<br>• <strong>المقنن المائي:</strong> 2,400 م³/فدان مع التسوية الدقيقة بالليزر.`;
+                    answer = `<strong>توصيات القمح لمحافظة ${st.name_ar} (مؤشر PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>الأصناف المقاومة:</strong> سخا 95، مصر 3، سدس 14.<br>• <strong>ميعاد الزراعة:</strong> من 15 نوفمبر حتى 5 ديسمبر لتفادي الإجهاد الحراري.<br>• <strong>المقنن المائي:</strong> 2,400 م³/فدان مع التسوية الدقيقة بالليزر.`;
                 } else if (q.includes('قصب') || q.includes('سكر') || q.includes('بديل')) {
-                    answer = `🥔 <strong>بدائل قصب السكر الموفرة بـ ${st.name_ar}:</strong><br>• <strong>بنجر السكر:</strong> يوفر أكثر من 70% من المياه (3,200 م³/فدان مقابل 10,500 م³ للقصب التقليدي).<br>• <strong>شتلات القصب بالتنقيط:</strong> خفض الاستهلاك إلى 6,000 م³/فدان مع زيادة نسبة السكر.`;
+                    answer = `<strong>بدائل قصب السكر الموفرة بـ ${st.name_ar}:</strong><br>• <strong>بنجر السكر:</strong> يوفر أكثر من 70% من المياه (3,200 م³/فدان مقابل 10,500 م³ للقصب التقليدي).<br>• <strong>شتلات القصب بالتنقيط:</strong> خفض الاستهلاك إلى 6,000 م³/فدان مع زيادة نسبة السكر.`;
                 } else if (q.includes('رمان') || q.includes('منفلوط')) {
-                    answer = `🍎 <strong>بساتين الرمان المنفلوطي بـ ${st.name_ar}:</strong><br>• الاحتياج المائي: 2,800 - 3,200 م³/فدان.<br>• يوصى بالتغطية العضوية (Mulching) والري الفجري لتجنب تشقق الثمار.`;
+                    answer = `<strong>بساتين الرمان المنفلوطي بـ ${st.name_ar}:</strong><br>• الاحتياج المائي: 2,800 - 3,200 م³/فدان.<br>• يوصى بالتغطية العضوية (Mulching) والري الفجري لتجنب تشقق الثمار.`;
                 } else if (q.includes('نقص') || q.includes('مياه') || q.includes('ري') || q.includes('ترشيد')) {
-                    answer = `💧 <strong>خطة ترشيد مياه الري بـ ${st.name_ar} (مؤشر بالمر = ${pdsiVal.toFixed(2)}):</strong><br>1. الري الليلي/الفجري لتقليل الفاقد بالتبخير بنسبة 25%.<br>2. تطبيق الري الناقص المنظم (RDI) في المراحل غير الحرجة.<br>3. التحول للأنبوب المبوب والري بالتنقيط.`;
+                    answer = `<strong>خطة ترشيد مياه الري بـ ${st.name_ar} (مؤشر بالمر = ${pdsiVal.toFixed(2)}):</strong><br>1. الري الليلي/الفجري لتقليل الفاقد بالتبخير بنسبة 25%.<br>2. تطبيق الري الناقص المنظم (RDI) في المراحل غير الحرجة.<br>3. التحول للأنبوب المبوب والري بالتنقيط.`;
                 } else if (q.includes('أسيوط') || q.includes('المنيا') || q.includes('سوهاج') || q.includes('قنا') || q.includes('الأقصر') || q.includes('أسوان') || q.includes('بني سويف') || q.includes('الفيوم')) {
-                    answer = `📍 <strong>بيانات محافظة ${st.name_ar}:</strong><br>• <strong>مؤشر الجفاف PDSI:</strong> ${pdsiVal.toFixed(2)}.<br>• <strong>طبيعة التربة:</strong> ${st.soil_type_ar}.<br>• <strong>المحاصيل الرئيسية:</strong> ${st.primary_agriculture_ar}.<br>• <strong>التوصية:</strong> الري بالتنقيط مع الإضافة البوتاسية لزيادة مقاومة الإجهاد الحراري.`;
+                    answer = `<strong>بيانات محافظة ${st.name_ar}:</strong><br>• <strong>مؤشر الجفاف PDSI:</strong> ${pdsiVal.toFixed(2)}.<br>• <strong>طبيعة التربة:</strong> ${st.soil_type_ar}.<br>• <strong>المحاصيل الرئيسية:</strong> ${st.primary_agriculture_ar}.<br>• <strong>التوصية:</strong> الري بالتنقيط مع الإضافة البوتاسية لزيادة مقاومة الإجهاد الحراري.`;
                 } else {
-                    answer = `🌿 <strong>مستشار NileGuard الذكي (${st.name_ar}):</strong><br>رداً على استفسارك؛ تؤكد التنبؤات المناخية لمحافظة <strong>${st.name_ar}</strong> (مؤشر PDSI = ${pdsiVal.toFixed(2)}) أهمية الالتزام بالمقننات المائية المعتمدة والتحول للري الحديث لضمان أعلى إنتاجية وأعلى وفر مائي.`;
+                    answer = `<strong>مستشار NileGuard الذكي (${st.name_ar}):</strong><br>رداً على استفسارك؛ تؤكد التنبؤات المناخية لمحافظة <strong>${st.name_ar}</strong> (مؤشر PDSI = ${pdsiVal.toFixed(2)}) أهمية الالتزام بالمقننات المائية المعتمدة والتحول للري الحديث لضمان أعلى إنتاجية وأعلى وفر مائي.`;
                 }
             }
 
