@@ -1226,23 +1226,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (btnSelectAllEl) btnSelectAllEl.textContent = 'الكل';
             if (btnSelectNoneEl) btnSelectNoneEl.textContent = 'المحددة';
             if (btnSimText) btnSimText.textContent = 'تنفيذ الاستدلال الذكي';
-            if (txtSpatialTitle) txtSpatialTitle.textContent = 'شدة الجفاف — جمهورية مصر العربية';
+            if (txtSpatialTitle) txtSpatialTitle.textContent = 'خريطة مراقبة الجفاف بالذكاء الاصطناعي';
             if (playerLabel) playerLabel.textContent = isPlaying ? 'إيقاف مؤقت' : 'محاكاة 4D';
             if (txtRankedTitle) txtRankedTitle.textContent = 'ترتيب الخطورة';
             if (thGov) thGov.textContent = 'المحافظة';
             if (btnBaseSat) btnBaseSat.textContent = 'قمر صناعي';
             if (btnBaseTerrain) btnBaseTerrain.textContent = 'تضاريس';
             if (btnBaseDark) btnBaseDark.textContent = 'داكن';
+            if (footerSloganBar) footerSloganBar.textContent = 'منصة NileGuard الذكية · «نستبق الجفاف.. لأمان النيل ونماء الأرض» · Contact: nileguard26@gmail.com';
 
             // ROI
-            if (txtCalcTitle) txtCalcTitle.textContent = 'حاسبة الوفر المائي والجدوى الاقتصادية للفلاح المصري (Agri-ROI Calculator)';
+            if (txtCalcTitle) txtCalcTitle.textContent = 'حاسبة الوفر المائي والجدوى الاقتصادية (Agri-ROI Calculator)';
             if (txtCalcDesc) txtCalcDesc.textContent = 'احسب كمية المياه الموفرة سنوياً والعائد المالي المحقق عند تطبيق المقننات المائية المعتمدة وتوجيهات NileGuard الذكية';
             if (btnVoiceBriefEl) btnVoiceBriefEl.innerHTML = '<span>استمع للإرشاد الصوتي (Voice Brief)</span>';
-            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>تحميل التقرير التنفيذي PDF</span>';
+            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>تحميل النشرة الذكية PDF</span>';
             const txtBtnReportsDownloadAr = document.getElementById('txt-btn-reports-download');
-            if (txtBtnReportsDownloadAr) txtBtnReportsDownloadAr.textContent = 'تحميل التقرير التنفيذي PDF';
+            if (txtBtnReportsDownloadAr) txtBtnReportsDownloadAr.textContent = 'تحميل النشرة الذكية PDF';
             const txtReportTitleAr = document.getElementById('txt-report-title');
-            if (txtReportTitleAr) txtReportTitleAr.textContent = 'التقرير التنفيذي الرسمي لمخاطر الجفاف (Executive PDF Bulletin)';
+            if (txtReportTitleAr) txtReportTitleAr.textContent = 'النشرة الذكية لمخاطر الجفاف (Executive PDF Bulletin)';
             const txtReportDescAr = document.getElementById('txt-report-desc');
             if (txtReportDescAr) txtReportDescAr.textContent = 'وثيقة قومية معتمدة لدعم اتخاذ القرار بمديريات الري والزراعة بصعيد مصر، تحتوي على التحليل المناخي التنبؤي والمقننات المائية المعتمدة.';
             if (tankVolTitle) tankVolTitle.textContent = 'حجم المياه المحمية من الهدر';
@@ -1322,7 +1323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (btnTabRoi) btnTabRoi.innerHTML = '<span>Agri-ROI Calculator</span>';
             if (appSloganHeader) appSloganHeader.textContent = 'Ahead of Drought: Securing the Nile, Sustaining the Land';
             if (heroSloganBadge) heroSloganBadge.innerHTML = '<span>Ahead of Drought: Securing the Nile, Sustaining the Land</span>';
-            if (footerSloganBar) footerSloganBar.textContent = 'NileGuard AI Platform · "Ahead of Drought: Securing the Nile, Sustaining the Land" · Arab Republic of Egypt 2026';
+            if (footerSloganBar) footerSloganBar.textContent = 'NileGuard AI Platform · "Ahead of Drought: Securing the Nile, Sustaining the Land" · Contact: nileguard26@gmail.com';
             if (bulletinSloganText) bulletinSloganText.textContent = 'NileGuard System · "Ahead of Drought: Securing the Nile, Sustaining the Land"';
 
             // Chatbot Widget English
