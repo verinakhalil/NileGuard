@@ -1671,21 +1671,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!chatMessages) return;
         const msgDiv = document.createElement('div');
         msgDiv.className = `chatbot-msg-bubble msg-${sender}`;
-        if (sender === 'user') {
-            msgDiv.innerHTML = `
-                <div class="chatbot-bubble-text">
-                    ${htmlContent}
-                </div>
-                <div style="font-size: 1.15rem;">🧑‍🌾</div>
-            `;
-        } else {
-            msgDiv.innerHTML = `
-                <div style="font-size: 1.15rem;">🤖</div>
-                <div class="chatbot-bubble-text">
-                    ${htmlContent}
-                </div>
-            `;
-        }
+        msgDiv.innerHTML = `
+            <div class="chatbot-bubble-text">
+                ${htmlContent}
+            </div>
+        `;
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -1745,23 +1735,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             } else {
                 if (isGreeting) {
-                    answer = `أهلاً بك! أنا مستشارك الزراعي الذكي لمحافظة <strong>${st.name_ar}</strong> (مؤشر التنبؤ بالجفاف PDSI = ${pdsiVal.toFixed(2)}).<br><br>كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن:<br>• أفضل أصناف القمح المقاومة للجفاف<br>• جداول الري بالتنقيط وترشيد المياه<br>• بدائل قصب السكر وبساتين الرمان`;
+                    answer = `أهلاً بك! أنا المستشار الزراعي الذكي لمحافظة <strong>${st.name_ar}</strong> (مؤشر التنبؤ بالجفاف PDSI = ${pdsiVal.toFixed(2)}).<br><br>كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن:<br>• أفضل أصناف القمح المقاومة للجفاف<br>• جداول الري بالتنقيط وترشيد المياه<br>• بدائل قصب السكر وبساتين الرمان`;
                 } else if (isThanks) {
                     answer = `العفو! أنا دائمًا في خدمتك لحماية المحاصيل وترشيد مياه الري بمحافظة <strong>${st.name_ar}</strong>. يسعدني الإجابة عن أي استفسار آخر!`;
                 } else if (isHelp) {
-                    answer = `أنا <strong>مستشار NileGuard الذكي</strong> — منظومة ذكاء اصطناعي مناخية تعتمد على بيانات TerraClimate الفضائية والنماذج القومية للمقننات المائية.<br><br>أقدم لك توصيات دقيقة لزراعة المحاصيل والري المناسب لمحافظات صعيد مصر.`;
+                    answer = `أنا <strong>المستشار الزراعي الذكي لمنظومة نايل جارد</strong> — منظومة ذكاء اصطناعي مناخية تعتمد على بيانات TerraClimate الفضائية والنماذج القومية للمقننات المائية.<br><br>أقدم لك توصيات دقيقة لزراعة المحاصيل والري المناسب لمحافظات صعيد مصر.`;
                 } else if (q.includes('قمح') || q.includes('wheat') || q.includes('سخا') || q.includes('مصر 3')) {
                     answer = `<strong>توصيات القمح لمحافظة ${st.name_ar} (مؤشر PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>الأصناف المقاومة:</strong> سخا 95، مصر 3، سدس 14.<br>• <strong>ميعاد الزراعة:</strong> من 15 نوفمبر حتى 5 ديسمبر لتفادي الإجهاد الحراري.<br>• <strong>المقنن المائي:</strong> 2,400 م³/فدان مع التسوية الدقيقة بالليزر.`;
                 } else if (q.includes('قصب') || q.includes('سكر') || q.includes('بديل')) {
-                    answer = `<strong>بدائل قصب السكر الموفرة بـ ${st.name_ar}:</strong><br>• <strong>بنجر السكر:</strong> يوفر أكثر من 70% من المياه (3,200 م³/فدان مقابل 10,500 م³ للقصب التقليدي).<br>• <strong>شتلات القصب بالتنقيط:</strong> خفض الاستهلاك إلى 6,000 م³/فدان مع زيادة نسبة السكر.`;
+                    answer = `<strong>بدائل قصب السكر الموفرة بمحافظة ${st.name_ar}:</strong><br>• <strong>بنجر السكر:</strong> يوفر أكثر من 70% من المياه (3,200 م³/فدان مقابل 10,500 م³ للقصب التقليدي).<br>• <strong>شتلات القصب بالتنقيط:</strong> خفض الاستهلاك إلى 6,000 م³/فدان مع زيادة نسبة السكر.`;
                 } else if (q.includes('رمان') || q.includes('منفلوط')) {
-                    answer = `<strong>بساتين الرمان المنفلوطي بـ ${st.name_ar}:</strong><br>• الاحتياج المائي: 2,800 - 3,200 م³/فدان.<br>• يوصى بالتغطية العضوية (Mulching) والري الفجري لتجنب تشقق الثمار.`;
+                    answer = `<strong>بساتين الرمان المنفلوطي بمحافظة ${st.name_ar}:</strong><br>• الاحتياج المائي: 2,800 - 3,200 م³/فدان.<br>• يوصى بالتغطية العضوية (Mulching) والري الفجري لتجنب تشقق الثمار.`;
                 } else if (q.includes('نقص') || q.includes('مياه') || q.includes('ري') || q.includes('ترشيد')) {
-                    answer = `<strong>خطة ترشيد مياه الري بـ ${st.name_ar} (مؤشر بالمر = ${pdsiVal.toFixed(2)}):</strong><br>1. الري الليلي/الفجري لتقليل الفاقد بالتبخير بنسبة 25%.<br>2. تطبيق الري الناقص المنظم (RDI) في المراحل غير الحرجة.<br>3. التحول للأنبوب المبوب والري بالتنقيط.`;
+                    answer = `<strong>خطة ترشيد مياه الري بمحافظة ${st.name_ar} (مؤشر بالمر = ${pdsiVal.toFixed(2)}):</strong><br>1. الري الليلي/الفجري لتقليل الفاقد بالتبخير بنسبة 25%.<br>2. تطبيق الري الناقص المنظم (RDI) في المراحل غير الحرجة.<br>3. التحول للأنبوب المبوب والري بالتنقيط.`;
                 } else if (q.includes('أسيوط') || q.includes('المنيا') || q.includes('سوهاج') || q.includes('قنا') || q.includes('الأقصر') || q.includes('أسوان') || q.includes('بني سويف') || q.includes('الفيوم')) {
                     answer = `<strong>بيانات محافظة ${st.name_ar}:</strong><br>• <strong>مؤشر الجفاف PDSI:</strong> ${pdsiVal.toFixed(2)}.<br>• <strong>طبيعة التربة:</strong> ${st.soil_type_ar}.<br>• <strong>المحاصيل الرئيسية:</strong> ${st.primary_agriculture_ar}.<br>• <strong>التوصية:</strong> الري بالتنقيط مع الإضافة البوتاسية لزيادة مقاومة الإجهاد الحراري.`;
                 } else {
-                    answer = `<strong>مستشار NileGuard الذكي (${st.name_ar}):</strong><br>رداً على استفسارك؛ تؤكد التنبؤات المناخية لمحافظة <strong>${st.name_ar}</strong> (مؤشر PDSI = ${pdsiVal.toFixed(2)}) أهمية الالتزام بالمقننات المائية المعتمدة والتحول للري الحديث لضمان أعلى إنتاجية وأعلى وفر مائي.`;
+                    answer = `<strong>المستشار الزراعي الذكي لمحافظة ${st.name_ar}:</strong><br>رداً على استفسارك؛ تؤكد التنبؤات المناخية لمحافظة <strong>${st.name_ar}</strong> (مؤشر PDSI = ${pdsiVal.toFixed(2)}) أهمية الالتزام بالمقننات المائية المعتمدة والتحول للري الحديث لضمان أعلى إنتاجية وأعلى وفر مائي.`;
                 }
             }
 
