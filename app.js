@@ -1680,6 +1680,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
+    function normalizeArabic(text) {
+        if (!text) return "";
+        return text.toLowerCase()
+            .replace(/[أإآ]/g, 'ا')
+            .replace(/ة/g, 'ه')
+            .replace(/ى/g, 'ي')
+            .replace(/[\u064B-\u0652]/g, '')
+            .trim();
+    }
+
     function processAiResponse(query) {
         const st = appData.stations[activeGov];
         const horizonIdx = Math.min(currentHorizon - 1, st.forecast_series.length - 1);
@@ -1704,54 +1714,83 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (el) el.remove();
 
             let answer = "";
-            const q = query.toLowerCase().trim();
+            const rawQ = query.toLowerCase().trim();
+            const normQ = normalizeArabic(query);
 
-            // Greeting keywords
-            const isGreeting = /^(hi|hello|hey|أهلا|اهلاً|أهلاً|مرحبا|مرحباً|سلام|السلام عليكم|ازيك|صباح الخير|مساء الخير)$/i.test(q) || q.startsWith('hi ') || q.startsWith('hello ') || q.startsWith('أهلا') || q.startsWith('سلام');
-            
-            // Thanks keywords
-            const isThanks = /^(شكرا|شكراً|ثانكس|تسلم|تسلم ايدك|ممتاز|شكرا جزيلا|thanks|thank you|great|awesome)$/i.test(q);
-            
-            // Identity/Help keywords
-            const isHelp = q.includes('مين انت') || q.includes('من أنت') || q.includes('وظيفتك') || q.includes('مين حضرتك') || q.includes('who are you') || q.includes('what is nileguard') || q.includes('مساعدة') || q.includes('help');
+            // 1. Natural Greeting & Small Talk
+            const isGreeting = (
+                normQ === 'اهلا' || normQ === 'اهلين' || normQ === 'مرحبا' || normQ === 'مرحبتين' ||
+                normQ === 'سلام' || normQ === 'السلام عليكم' || normQ === 'ازيك' || normQ === 'اخبارك' ||
+                normQ === 'صباح الخير' || normQ === 'مساء الخير' || normQ === 'هاي' || normQ === 'هالو' ||
+                normQ.startsWith('اهلا') || normQ.startsWith('مرحبا') || normQ.startsWith('سلام') ||
+                normQ.startsWith('صباح') || normQ.startsWith('مساء') ||
+                rawQ === 'hi' || rawQ === 'hello' || rawQ === 'hey' || rawQ.startsWith('hi ') || rawQ.startsWith('hello ')
+            );
+
+            // 2. Polite Thanks & Small Talk
+            const isThanks = (
+                normQ.includes('شكرا') || normQ.includes('تسلم') || normQ.includes('الله ينور') ||
+                normQ.includes('يعطيك') || normQ.includes('عاشت') || normQ.includes('ممتاز') || normQ === 'تمام' ||
+                rawQ.includes('thanks') || rawQ.includes('thank you') || rawQ === 'great' || rawQ === 'awesome'
+            );
+
+            // 3. Identity & Role Queries
+            const isHelp = (
+                normQ.includes('مين انت') || normQ.includes('من انت') || normQ.includes('وظيفتك') ||
+                normQ.includes('مين حضرتك') || normQ.includes('ما وظيفتك') || normQ.includes('تعريف') ||
+                rawQ.includes('who are you') || rawQ.includes('what is nileguard') || rawQ.includes('help')
+            );
+
+            // 4. Agronomic & Technical Topics
+            const isWheat = normQ.includes('قمح') || normQ.includes('سخا') || normQ.includes('مصر 3') || normQ.includes('سدس') || rawQ.includes('wheat') || rawQ.includes('sakha');
+            const isCane = normQ.includes('قصب') || normQ.includes('بنجر') || normQ.includes('سكر') || normQ.includes('بديل') || rawQ.includes('sugar') || rawQ.includes('cane') || rawQ.includes('beet');
+            const isPom = normQ.includes('رمان') || normQ.includes('منفلوط') || normQ.includes('بساتين') || rawQ.includes('pomegranate') || rawQ.includes('manfalut');
+            const isWater = normQ.includes('ري') || normQ.includes('مياه') || normQ.includes('ترشيد') || normQ.includes('نقص') || normQ.includes('تنقيط') || normQ.includes('بخر') || normQ.includes('احتياج') || rawQ.includes('irrigation') || rawQ.includes('water') || rawQ.includes('deficit');
+            const isGovInfo = normQ.includes('اسيوط') || normQ.includes('المنيا') || normQ.includes('سوهاج') || normQ.includes('قنا') || normQ.includes('الاقصر') || normQ.includes('اسوان') || normQ.includes('بني سويف') || normQ.includes('الفيوم') || normQ.includes('تربه') || normQ.includes('محافظه') || rawQ.includes('asyut') || rawQ.includes('minya') || rawQ.includes('sohag') || rawQ.includes('qena') || rawQ.includes('luxor') || rawQ.includes('aswan') || rawQ.includes('benisuef') || rawQ.includes('fayoum') || rawQ.includes('soil');
 
             if (currentLang === 'en') {
                 if (isGreeting) {
-                    answer = `Hello! I am your <strong>NileGuard AI Advisor</strong> for <strong>${st.name_en}</strong> (PDSI Drought Forecast = ${pdsiVal.toFixed(2)}).<br><br>How can I help you today? You can ask me about:<br>• Resilient wheat & crop varieties<br>• Irrigation schedules & water saving<br>• Sugarcane & pomegranate recommendations`;
+                    answer = `Hello! Welcome to the <strong>NileGuard AI Platform</strong>.<br><br>I am your Agronomic Advisor for <strong>${st.name_en}</strong> (Predicted PDSI = ${pdsiVal.toFixed(2)}). How can I assist you today with crop recommendations or water management?`;
                 } else if (isThanks) {
-                    answer = `You're very welcome! I am always here to help you optimize irrigation and boost crop resilience across Upper Egypt. Let me know if you have any more questions!`;
+                    answer = `You're very welcome! I am always here to assist you with agricultural guidance and water optimization across Upper Egypt.`;
                 } else if (isHelp) {
-                    answer = `I am <strong>NileGuard AI Advisor</strong> — an intelligent agronomic system powered by satellite TerraClimate data.<br><br>I provide actionable advice on crop selection, deficit irrigation, and water conservation for 8 Upper Egypt governorates.`;
-                } else if (q.includes('wheat') || q.includes('sakha') || q.includes('misr')) {
-                    answer = `<strong>Wheat Cultivation Advisories for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>Resilient Varieties:</strong> Sakha 95, Misr 3, Sids 14.<br>• <strong>Planting Window:</strong> Nov 15 – Dec 5.<br>• <strong>Water Need:</strong> 2,400 m³/feddan with laser land leveling.`;
-                } else if (q.includes('sugar') || q.includes('cane') || q.includes('beet')) {
-                    answer = `<strong>Sugarcane Alternatives for ${st.name_en}:</strong><br>• <strong>Sugar Beet:</strong> Saves >70% water (3,200 m³/feddan).<br>• <strong>Drip Seedling Sugarcane:</strong> Reduces water use to 6,000 m³/feddan.`;
-                } else if (q.includes('pomegranate') || q.includes('manfalut')) {
-                    answer = `<strong>Manfaluti Pomegranate in ${st.name_en}:</strong><br>• Quota: 2,800–3,200 m³/feddan.<br>• Apply mulching and early morning drip cycles to prevent fruit cracking.`;
-                } else if (q.includes('irrigation') || q.includes('water') || q.includes('deficit')) {
+                    answer = `I am <strong>NileGuard AI Advisor</strong> — an intelligent agronomic assistant powered by satellite climate data and national water quota benchmarks for Upper Egypt.`;
+                } else if (isWheat) {
+                    answer = `<strong>Wheat Cultivation Advisories for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>Resilient Varieties:</strong> Sakha 95, Misr 3, Sids 14.<br>• <strong>Planting Window:</strong> Nov 15 – Dec 5 to mitigate heat stress.<br>• <strong>Water Quota:</strong> 2,400 m³/feddan with laser land leveling.`;
+                } else if (isCane) {
+                    answer = `<strong>Sugarcane Alternatives for ${st.name_en}:</strong><br>• <strong>Sugar Beet:</strong> Saves >70% water (3,200 m³/feddan vs 10,500 m³ for flood sugarcane).<br>• <strong>Drip Seedling Sugarcane:</strong> Cuts water use to 6,000 m³/feddan while boosting sugar content.`;
+                } else if (isPom) {
+                    answer = `<strong>Manfaluti Pomegranate in ${st.name_en}:</strong><br>• Water Quota: 2,800–3,200 m³/feddan.<br>• Apply organic mulching and early morning drip cycles to prevent fruit cracking.`;
+                } else if (isWater) {
                     answer = `<strong>Irrigation Action Plan for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>1. Night/early morning drip irrigation (cuts evaporation by 25%).<br>2. Regulated deficit irrigation during non-critical growth stages.<br>3. Pipeline conveyance instead of open ditches.`;
+                } else if (isGovInfo) {
+                    answer = `<strong>Agricultural Data for ${st.name_en}:</strong><br>• <strong>Predicted PDSI:</strong> ${pdsiVal.toFixed(2)}.<br>• <strong>Soil Type:</strong> ${st.soil_type_en}.<br>• <strong>Key Crops:</strong> ${st.primary_agriculture_en}.<br>• Recommend drip irrigation with supplemental potassium to mitigate heat stress.`;
                 } else {
-                    answer = `<strong>Agronomic Guidance for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>Soil Type:</strong> ${st.soil_type_en}.<br>• <strong>Key Crops:</strong> ${st.primary_agriculture_en}.<br>• Recommend drip irrigation with supplemental potassium to mitigate heat stress.`;
+                    answer = `I apologize, I am specialized strictly in agricultural advisories, irrigation management, and drought forecasting for Upper Egypt governorates. Please feel free to ask me about crop selection, water quotas, or drip irrigation methods!`;
                 }
             } else {
                 if (isGreeting) {
-                    answer = `أهلاً بك! أنا المستشار الزراعي الذكي لمحافظة <strong>${st.name_ar}</strong> (مؤشر التنبؤ بالجفاف PDSI = ${pdsiVal.toFixed(2)}).<br><br>كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن:<br>• أفضل أصناف القمح المقاومة للجفاف<br>• جداول الري بالتنقيط وترشيد المياه<br>• بدائل قصب السكر وبساتين الرمان`;
+                    if (normQ.includes('ازيك') || normQ.includes('اخبارك')) {
+                        answer = `الحمد لله، أنا بخير وفي خدمتك دائماً! أهلاً بك في منصة <strong>NileGuard</strong>. كيف يمكنني مساعدتك اليوم في شؤون الزراعة والري بمحافظة <strong>${st.name_ar}</strong>؟`;
+                    } else {
+                        answer = `أهلاً وسهلاً بك! أنا المستشار الزراعي الذكي لمحافظة <strong>${st.name_ar}</strong> (مؤشر التنبؤ بالجفاف PDSI = ${pdsiVal.toFixed(2)}).<br><br>كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن:<br>• أفضل أصناف القمح المقاومة للجفاف<br>• جداول الري بالتنقيط وترشيد المياه<br>• بدائل قصب السكر وبساتين الرمان`;
+                    }
                 } else if (isThanks) {
-                    answer = `العفو! أنا دائمًا في خدمتك لحماية المحاصيل وترشيد مياه الري بمحافظة <strong>${st.name_ar}</strong>. يسعدني الإجابة عن أي استفسار آخر!`;
+                    answer = `العفو، تحت أمرك دائماً! يسعدني مساعدتك في حماية المحاصيل وترشيد مياه الري بمحافظة <strong>${st.name_ar}</strong>.`;
                 } else if (isHelp) {
                     answer = `أنا <strong>المستشار الزراعي الذكي لمنظومة نايل جارد</strong> — منظومة ذكاء اصطناعي مناخية تعتمد على بيانات TerraClimate الفضائية والنماذج القومية للمقننات المائية.<br><br>أقدم لك توصيات دقيقة لزراعة المحاصيل والري المناسب لمحافظات صعيد مصر.`;
-                } else if (q.includes('قمح') || q.includes('wheat') || q.includes('سخا') || q.includes('مصر 3')) {
+                } else if (isWheat) {
                     answer = `<strong>توصيات القمح لمحافظة ${st.name_ar} (مؤشر PDSI = ${pdsiVal.toFixed(2)}):</strong><br>• <strong>الأصناف المقاومة:</strong> سخا 95، مصر 3، سدس 14.<br>• <strong>ميعاد الزراعة:</strong> من 15 نوفمبر حتى 5 ديسمبر لتفادي الإجهاد الحراري.<br>• <strong>المقنن المائي:</strong> 2,400 م³/فدان مع التسوية الدقيقة بالليزر.`;
-                } else if (q.includes('قصب') || q.includes('سكر') || q.includes('بديل')) {
+                } else if (isCane) {
                     answer = `<strong>بدائل قصب السكر الموفرة بمحافظة ${st.name_ar}:</strong><br>• <strong>بنجر السكر:</strong> يوفر أكثر من 70% من المياه (3,200 م³/فدان مقابل 10,500 م³ للقصب التقليدي).<br>• <strong>شتلات القصب بالتنقيط:</strong> خفض الاستهلاك إلى 6,000 م³/فدان مع زيادة نسبة السكر.`;
-                } else if (q.includes('رمان') || q.includes('منفلوط')) {
+                } else if (isPom) {
                     answer = `<strong>بساتين الرمان المنفلوطي بمحافظة ${st.name_ar}:</strong><br>• الاحتياج المائي: 2,800 - 3,200 م³/فدان.<br>• يوصى بالتغطية العضوية (Mulching) والري الفجري لتجنب تشقق الثمار.`;
-                } else if (q.includes('نقص') || q.includes('مياه') || q.includes('ري') || q.includes('ترشيد')) {
+                } else if (isWater) {
                     answer = `<strong>خطة ترشيد مياه الري بمحافظة ${st.name_ar} (مؤشر بالمر = ${pdsiVal.toFixed(2)}):</strong><br>1. الري الليلي/الفجري لتقليل الفاقد بالتبخير بنسبة 25%.<br>2. تطبيق الري الناقص المنظم (RDI) في المراحل غير الحرجة.<br>3. التحول للأنبوب المبوب والري بالتنقيط.`;
-                } else if (q.includes('أسيوط') || q.includes('المنيا') || q.includes('سوهاج') || q.includes('قنا') || q.includes('الأقصر') || q.includes('أسوان') || q.includes('بني سويف') || q.includes('الفيوم')) {
+                } else if (isGovInfo) {
                     answer = `<strong>بيانات محافظة ${st.name_ar}:</strong><br>• <strong>مؤشر الجفاف PDSI:</strong> ${pdsiVal.toFixed(2)}.<br>• <strong>طبيعة التربة:</strong> ${st.soil_type_ar}.<br>• <strong>المحاصيل الرئيسية:</strong> ${st.primary_agriculture_ar}.<br>• <strong>التوصية:</strong> الري بالتنقيط مع الإضافة البوتاسية لزيادة مقاومة الإجهاد الحراري.`;
                 } else {
-                    answer = `<strong>المستشار الزراعي الذكي لمحافظة ${st.name_ar}:</strong><br>رداً على استفسارك؛ تؤكد التنبؤات المناخية لمحافظة <strong>${st.name_ar}</strong> (مؤشر PDSI = ${pdsiVal.toFixed(2)}) أهمية الالتزام بالمقننات المائية المعتمدة والتحول للري الحديث لضمان أعلى إنتاجية وأعلى وفر مائي.`;
+                    answer = `أعتذر منك، أنا مساعد متخصص فقط في الاستشارات الزراعية وترشيد مياه الري ومتابعة مؤشرات الجفاف لمحافظات صعيد مصر.<br><br>يمكنك سؤالي عن الأصناف المحصولية المقاومة للجفاف، المقننات المائية المعتمدة، أو تقنيات الري بالتنقيط!`;
                 }
             }
 
