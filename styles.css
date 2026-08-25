@@ -2578,4 +2578,26 @@ button,
     font-weight: 800 !important;
 }
 
+/* ==========================================================================
+   ULTRA HIGH-CONTRAST FOOTER & SLOGAN BAR STYLING
+   ========================================================================== */
+.bottom-model-bar,
+#footer-slogan-bar,
+body.theme-aerial .bottom-model-bar,
+body.theme-aerial #footer-slogan-bar {
+    background: #0f2922 !important;
+    color: #ffffff !important;
+    border-top: 2.5px solid #b38032 !important;
+    text-align: center !important;
+    padding: 1.1rem 1.5rem !important;
+    font-size: 0.98rem !important;
+    font-weight: 800 !important;
+    font-family: 'Cairo', 'Inter', sans-serif !important;
+    letter-spacing: 0.4px !important;
+    box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.45) !important;
+    position: relative !important;
+    z-index: 100 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
 
