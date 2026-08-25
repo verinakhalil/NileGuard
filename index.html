@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <!-- Main Stylesheet with cache busting -->
-    <link rel="stylesheet" href="styles.css?v=25.0">
+    <link rel="stylesheet" href="styles.css?v=26.0">
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="assets/nileguard_logo.jpg">
@@ -251,18 +251,9 @@
                             <label style="display: flex; align-items: center; gap: 0.5rem;">
                                 <span class="label-caps" style="color: var(--forest-muted); font-size: 0.65rem; white-space: nowrap;" id="txt-forecast-month">📅 Horizon:</span>
                                 <select id="select-horizon-month" class="console-select-box" style="padding: 0.45rem 0.8rem; font-size: 0.82rem; min-width: 170px;">
-                                    <option value="1">Month +1 (Jan 2021)</option>
-                                    <option value="2">Month +2 (Feb 2021)</option>
-                                    <option value="3">Month +3 (Mar 2021)</option>
-                                    <option value="4">Month +4 (Apr 2021)</option>
-                                    <option value="5">Month +5 (May 2021)</option>
-                                    <option value="6" selected>Month +6 (Jun 2021)</option>
-                                    <option value="7">Month +7 (Jul 2021)</option>
-                                    <option value="8">Month +8 (Aug 2021)</option>
-                                    <option value="9">Month +9 (Sep 2021)</option>
-                                    <option value="10">Month +10 (Oct 2021)</option>
-                                    <option value="11">Month +11 (Nov 2021)</option>
-                                    <option value="12">Month +12 (Dec 2021)</option>
+                                    <option value="3">Month +3 (مارس 2026 / Mar 2026)</option>
+                                    <option value="6" selected>Month +6 (يونيو 2026 / Jun 2026)</option>
+                                    <option value="9">Month +9 (سبتمبر 2026 / Sep 2026)</option>
                                 </select>
                             </label>
                         </div>
@@ -386,12 +377,13 @@
                                     <button class="btn-basemap" data-basemap="dark" id="btn-base-dark">🌙 داكن</button>
                                 </div>
 
-                                <div class="map-gradient-overlay">
-                                    <div class="gradient-title">Drought Severity</div>
-                                    <div class="gradient-bar"></div>
-                                    <div class="gradient-labels">
-                                        <span>Severe</span>
-                                        <span>Low</span>
+                                <div class="map-gradient-overlay" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 0.8rem 1rem; width: max-content; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                                    <div class="gradient-title" style="font-size: 0.78rem; font-weight: 800; color: #0f2922; margin-bottom: 0.5rem;">فئات الجفاف الـ 4 المعتمدة (4 Drought Categories)</div>
+                                    <div style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.72rem; font-weight: 700;">
+                                        <div style="display: flex; align-items: center; gap: 0.45rem;"><span style="width: 12px; height: 12px; background: #16a34a; border-radius: 50%;"></span> Cat 0: طبيعي / خفيف (PDSI &gt; -1.0)</div>
+                                        <div style="display: flex; align-items: center; gap: 0.45rem;"><span style="width: 12px; height: 12px; background: #d97706; border-radius: 50%;"></span> Cat 1: جفاف متوسط (-2.0 &lt; PDSI &le; -1.0)</div>
+                                        <div style="display: flex; align-items: center; gap: 0.45rem;"><span style="width: 12px; height: 12px; background: #ea580c; border-radius: 50%;"></span> Cat 2: جفاف شديد (-3.0 &lt; PDSI &le; -2.0)</div>
+                                        <div style="display: flex; align-items: center; gap: 0.45rem;"><span style="width: 12px; height: 12px; background: #b91c1c; border-radius: 50%;"></span> Cat 3: جفاف حرج للغاية (PDSI &le; -3.0)</div>
                                     </div>
                                 </div>
                             </div>
@@ -444,7 +436,7 @@
                             <h3 id="txt-chart-title">Asyut — PDSI Drought Trajectory & CNN-Transformer Forecast</h3>
                         </div>
                         <div class="legend-item font-mono" style="font-size: 0.76rem;">
-                            <span style="color: #2d7f9d; font-weight: 700;">■ Observed (1958–2020)</span> &nbsp;|&nbsp; 
+                            <span style="color: #2d7f9d; font-weight: 700;">■ Observed (1958–2024)</span> &nbsp;|&nbsp; 
                             <span style="color: #ea580c; font-weight: 700;">■ CNN-Transformer Forecast (95% CI)</span>
                         </div>
                     </div>
@@ -933,6 +925,6 @@
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=34.0"></script>
+    <script src="app.js?v=36.0"></script>
 </body>
 </html>

@@ -2535,3 +2535,47 @@ body.theme-aerial .tab-btn.active {
     font-weight: 900 !important;
 }
 
+/* ==========================================================================
+   GLOBAL ELEGANT ROUNDED BUTTONS & SMOOTH PADDING OVERRIDES
+   ========================================================================== */
+button, 
+.btn,
+.tab-btn,
+.btn-primary-action,
+.btn-inference,
+.btn-executive-bulletin,
+.crops-ai-hub-btn,
+.btn-lang,
+.gov-chip,
+.btn-basemap,
+.console-select-box,
+.calc-select {
+    border-radius: 16px !important;
+    padding-left: 1.3rem !important;
+    padding-right: 1.3rem !important;
+    padding-top: 0.65rem !important;
+    padding-bottom: 0.65rem !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.tab-btn {
+    border-radius: 14px !important;
+    padding: 0.6rem 1.3rem !important;
+}
+
+.gov-chip {
+    border-radius: 24px !important;
+    padding: 0.45rem 1.1rem !important;
+}
+
+.btn-primary-action,
+.btn-inference,
+.btn-executive-bulletin,
+.crops-ai-hub-btn {
+    border-radius: 35px !important;
+    padding: 0.85rem 1.8rem !important;
+    font-weight: 800 !important;
+}
+
+
