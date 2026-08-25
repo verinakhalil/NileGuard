@@ -1233,7 +1233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (btnBaseSat) btnBaseSat.textContent = 'قمر صناعي';
             if (btnBaseTerrain) btnBaseTerrain.textContent = 'تضاريس';
             if (btnBaseDark) btnBaseDark.textContent = 'داكن';
-            if (footerSloganBar) footerSloganBar.textContent = 'منصة NileGuard الذكية · «نستبق الجفاف.. لأمان النيل ونماء الأرض» · Contact: nileguard26@gmail.com';
+            if (footerSloganBar) footerSloganBar.textContent = 'منصة NileGuard الذكية · «نستبق الجفاف.. لأمان النيل ونماء الأرض» · للتواصل: nileguard26@gmail.com';
 
             // ROI
             if (txtCalcTitle) txtCalcTitle.textContent = 'حاسبة الوفر المائي والجدوى الاقتصادية (Agri-ROI Calculator)';
