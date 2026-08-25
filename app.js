@@ -1121,7 +1121,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const txtLauncherTitle = document.getElementById('txt-launcher-title');
         const txtLauncherSub = document.getElementById('txt-launcher-sub');
         const btnTabHome = document.getElementById('btn-tab-home');
-        const btnTabReports = document.getElementById('btn-tab-reports');
         const txtChatHeaderTitle = document.getElementById('txt-chat-header-title');
         const txtChatStatus = document.getElementById('txt-chat-status');
         const cropsHubTitle = document.getElementById('crops-hub-title');
@@ -1173,7 +1172,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (btnTabDash) btnTabDash.innerHTML = '<span>المراقبة والتنبؤ</span> <span class="tab-badge badge-live">● LIVE</span>';
             if (btnTabCrops) btnTabCrops.innerHTML = '<span>المرشد الذكي</span> <span class="tab-badge badge-ai">AI</span>';
             if (btnTabRoi) btnTabRoi.innerHTML = '<span>حاسبة الجدوى</span>';
-            if (btnTabReports) btnTabReports.innerHTML = '<span>التقارير</span>';
             if (appSloganHeader) appSloganHeader.textContent = 'نستبق الجفاف.. لأمان النيل ونماء الأرض';
             if (heroSloganBadge) heroSloganBadge.innerHTML = '<span>🌱 نستبق الجفاف.. لأمان النيل ونماء الأرض</span>';
             if (footerSloganBar) footerSloganBar.textContent = 'NileGuard AI Platform · « نستبق الجفاف.. لأمان النيل ونماء الأرض » · Arab Republic of Egypt 2026';
@@ -1316,7 +1314,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (btnTabDash) btnTabDash.innerHTML = '<span>Monitoring & Risk</span> <span class="tab-badge badge-live">● LIVE</span>';
             if (btnTabCrops) btnTabCrops.innerHTML = '<span>AI Advisor</span> <span class="tab-badge badge-ai">AI</span>';
             if (btnTabRoi) btnTabRoi.innerHTML = '<span>Agri-ROI Calculator</span>';
-            if (btnTabReports) btnTabReports.innerHTML = '<span>Reports</span>';
             if (appSloganHeader) appSloganHeader.textContent = 'Ahead of Drought: Securing the Nile, Sustaining the Land';
             if (heroSloganBadge) heroSloganBadge.innerHTML = '<span>🌱 Ahead of Drought: Securing the Nile, Sustaining the Land</span>';
             if (footerSloganBar) footerSloganBar.textContent = 'NileGuard AI Platform · "Ahead of Drought: Securing the Nile, Sustaining the Land" · Arab Republic of Egypt 2026';
