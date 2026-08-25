@@ -362,6 +362,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const chips = govChipsContainer.querySelectorAll('.gov-chip');
         chips.forEach(chip => {
             const gov = chip.getAttribute('data-gov');
+            const st = appData.stations[gov];
+            if (st) {
+                chip.textContent = currentLang === 'en' ? st.name_en : st.name_ar;
+            }
             if (gov === activeGov) {
                 chip.className = 'gov-chip active';
             } else if (selectedGovs.includes(gov)) {
@@ -465,7 +469,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         ${pdsiVal.toFixed(2)}
                     </span>
                 </td>
-                <td style="text-align: right; color: var(--text-dark); font-weight: 600;">${st.confidence}</td>
             `;
             rankedTbody.appendChild(tr);
         });
@@ -478,8 +481,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (txtChartTitle) {
             txtChartTitle.textContent = currentLang === 'en'
-                ? `${st.name_en} — PDSI Drought Trajectory & CNN-Transformer Forecast`
-                : `${st.name_ar} — مسار الجفاف وتنبؤات موديل CNN-Transformer (4-Category AI Engine)`;
+                ? `${st.name_en} — PDSI Drought Trajectory & Forecast`
+                : `${st.name_ar} — مسار الجفاف والتنبؤ المائي`;
         }
 
         const labels = [];
@@ -1231,7 +1234,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (txtCalcTitle) txtCalcTitle.textContent = '💧 حاسبة الوفر المائي والجدوى الاقتصادية للفلاح المصري (Agri-ROI Calculator)';
             if (txtCalcDesc) txtCalcDesc.textContent = 'احسب كمية المياه الموفرة سنوياً والعائد المالي المحقق عند تطبيق المقننات المائية المعتمدة وتوجيهات NileGuard الذكية';
             if (btnVoiceBriefEl) btnVoiceBriefEl.innerHTML = '<span>🔊 استمع للإرشاد الصوتي (Voice Brief)</span>';
-            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>🏛️ إصدار النشرة التحذيرية القومية الرسمية للمحافظة (Executive Bulletin PDF)</span> <span>📥</span>';
+            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>📥 تحميل التقرير التنفيذي PDF</span>';
+            const txtBtnReportsDownloadAr = document.getElementById('txt-btn-reports-download');
+            if (txtBtnReportsDownloadAr) txtBtnReportsDownloadAr.textContent = 'تحميل التقرير التنفيذي PDF';
+            const txtReportTitleAr = document.getElementById('txt-report-title');
+            if (txtReportTitleAr) txtReportTitleAr.textContent = 'التقرير التنفيذي الرسمي لمخاطر الجفاف (Executive PDF Bulletin)';
+            const txtReportDescAr = document.getElementById('txt-report-desc');
+            if (txtReportDescAr) txtReportDescAr.textContent = 'وثيقة قومية معتمدة لدعم اتخاذ القرار بمديريات الري والزراعة بصعيد مصر، تحتوي على التحليل المناخي التنبؤي والمقننات المائية المعتمدة.';
             if (tankVolTitle) tankVolTitle.textContent = 'حجم المياه المحمية من الهدر';
             const lblFeddans = document.getElementById('lbl-feddans');
             const lblOldFlood = document.getElementById('lbl-old-flood');
@@ -1368,7 +1377,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (txtCalcTitle) txtCalcTitle.textContent = '💧 Smart Agri-Water & Economic ROI Calculator (Agri-ROI)';
             if (txtCalcDesc) txtCalcDesc.textContent = 'Calculate annual water volume saved and financial returns under certified water quotas and NileGuard AI advisories.';
             if (btnVoiceBriefEl) btnVoiceBriefEl.innerHTML = '<span>🔊 Listen to AI Voice Brief</span>';
-            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>🏛️ Export Official National Executive Drought Bulletin (PDF)</span> <span>📥</span>';
+            if (btnOpenBulletinEl) btnOpenBulletinEl.innerHTML = '<span>📥 Download Executive Report (PDF)</span>';
+            const txtBtnReportsDownloadEn = document.getElementById('txt-btn-reports-download');
+            if (txtBtnReportsDownloadEn) txtBtnReportsDownloadEn.textContent = 'Download Executive Report (PDF)';
+            const txtReportTitleEn = document.getElementById('txt-report-title');
+            if (txtReportTitleEn) txtReportTitleEn.textContent = 'Official National Executive Drought Bulletin (PDF)';
+            const txtReportDescEn = document.getElementById('txt-report-desc');
+            if (txtReportDescEn) txtReportDescEn.textContent = 'Certified national executive document for decision-support across irrigation and agriculture directorates in Upper Egypt.';
             if (tankVolTitle) tankVolTitle.textContent = 'Water Volume Protected from Loss';
             const lblFeddansEn = document.getElementById('lbl-feddans');
             const lblOldFloodEn = document.getElementById('lbl-old-flood');

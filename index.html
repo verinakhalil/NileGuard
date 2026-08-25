@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <!-- Main Stylesheet with cache busting -->
-    <link rel="stylesheet" href="styles.css?v=27.0">
+    <link rel="stylesheet" href="styles.css?v=28.0">
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="assets/nileguard_logo.jpg">
@@ -408,8 +408,7 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align: left;" id="th-gov">Governorate</th>
-                                        <th style="text-align: right;">PDSI</th>
-                                        <th style="text-align: right;">Conf.</th>
+                                        <th style="text-align: right;">PDSI Forecast</th>
                                     </tr>
                                 </thead>
                                 <tbody id="ranked-tbody">
@@ -421,21 +420,20 @@
                         <!-- Footer Summary Strip -->
                         <div class="ranked-meta-footer" style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-subtle); font-size: 0.74rem; color: var(--text-muted); font-family: var(--font-mono);">
                             <span>📍 مرتبة حسب شدة الجفاف</span>
-                            <span style="color: var(--forest-bg); font-weight: 700;">دقة R² = 0.760</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. TIME SERIES TRAJECTORY CHART (HISTORICAL 1958-2021 & FORECAST) -->
+                <!-- 4. TIME SERIES TRAJECTORY CHART (HISTORICAL 1958-2024 & FORECAST) -->
                 <div class="panel chart-panel" style="margin-top: 0.2rem;" id="trajectory-chart-section">
                     <div class="chart-panel-header">
                         <div>
                             <span class="label-caps">Time Series Trajectory</span>
-                            <h3 id="txt-chart-title">Asyut — PDSI Drought Trajectory & CNN-Transformer Forecast</h3>
+                            <h3 id="txt-chart-title">Asyut — PDSI Drought Trajectory & Forecast</h3>
                         </div>
                         <div class="legend-item font-mono" style="font-size: 0.76rem;">
                             <span style="color: #2d7f9d; font-weight: 700;">■ Observed (1958–2024)</span> &nbsp;|&nbsp; 
-                            <span style="color: #ea580c; font-weight: 700;">■ CNN-Transformer Forecast (95% CI)</span>
+                            <span style="color: #ea580c; font-weight: 700;">■ Forecast (95% CI)</span>
                         </div>
                     </div>
                     <div class="canvas-container" style="height: 440px;">
@@ -687,7 +685,7 @@
 
                         <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
                             <button id="btn-open-bulletin-reports" class="btn-primary-action" style="padding: 0.9rem 1.8rem;">
-                                <span>تحميل التقرير التنفيذي PDF</span>
+                                <span id="txt-btn-reports-download">تحميل التقرير التنفيذي PDF</span>
                                 <span>📥</span>
                             </button>
                         </div>
@@ -710,8 +708,8 @@
                             </h3>
                         </div>
                         <div style="text-align: left; background: rgba(15, 41, 34, 0.05); padding: 0.6rem 1.2rem; border-radius: 10px; border: 1px solid rgba(15, 41, 34, 0.15);">
-                            <div style="font-size: 0.72rem; color: #64748b; font-weight: 700;">دقة نموذج التنبؤ</div>
-                            <div style="font-size: 1.1rem; font-weight: 900; color: #0f2922; font-family: var(--font-mono);">R² = 0.760</div>
+                            <div style="font-size: 0.72rem; color: #64748b; font-weight: 700;">حالة التقييم</div>
+                            <div style="font-size: 1.1rem; font-weight: 900; color: #0f2922; font-family: var(--font-mono);">معتمد رسمياً</div>
                         </div>
                     </div>
 
@@ -923,6 +921,6 @@
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=37.0"></script>
+    <script src="app.js?v=39.0"></script>
 </body>
 </html>
