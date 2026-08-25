@@ -1186,8 +1186,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Chatbot Widget Arabic
             if (txtLauncherTitle) txtLauncherTitle.textContent = 'المستشار الزراعي الذكي';
             if (txtLauncherSub) txtLauncherSub.textContent = 'Gemini AI Active';
-            if (txtChatHeaderTitle) txtChatHeaderTitle.textContent = 'NileGuard مستشارك الزراعي الذكي';
-            if (txtChatStatus) txtChatStatus.textContent = 'محرك Gemini الذكي نشط';
+            if (txtChatHeaderTitle) txtChatHeaderTitle.textContent = 'المستشار الزراعي الذكي';
+            if (txtChatStatus) txtChatStatus.textContent = 'محرك الذكاء الاصطناعي نشط (Gemini AI)';
             if (cropsHubTitle) cropsHubTitle.textContent = 'المساعد الزراعي الذكي المباشر (Powered by Gemini AI Engine)';
             if (cropsHubDesc) cropsHubDesc.textContent = 'استشر الذكاء الاصطناعي التوليدي في التوصيات المحصولية، جداول الري، واستراتيجيات التكيف مع الجفاف لمحافظتك.';
             if (txtCropsHubBtn) txtCropsHubBtn.textContent = 'فتح المحادثة الفورية مع المستشار الذكي';
@@ -1741,15 +1741,43 @@ document.addEventListener('DOMContentLoaded', async () => {
                 rawQ.includes('who are you') || rawQ.includes('what is nileguard') || rawQ.includes('help')
             );
 
-            // 4. Agronomic & Technical Topics
+            // 4. Governorate Switching & Selection Intent
+            const isGovSwitch = (
+                normQ.includes('محافظه تانيه') || normQ.includes('تغيير المحافظه') ||
+                normQ.includes('تغئير المحافظه') || normQ.includes('شوف محافظه') ||
+                normQ.includes('نغير المحافظه') || normQ.includes('اختار محافظه') ||
+                normQ.includes('المحافظات المتاحه') || normQ.includes('محافظات تانيه') ||
+                normQ.includes('محافظه اخرى') || normQ.includes('ازاي اغير') ||
+                normQ.includes('نشوف محافظة') || normQ.includes('محافظة ثانية') ||
+                rawQ.includes('change governorate') || rawQ.includes('other governorate') || rawQ.includes('list governorates')
+            );
+
+            // 5. Detect Specific Governorate Mention
+            let targetGovKey = null;
+            if (normQ.includes('منيا') || rawQ.includes('minya')) targetGovKey = 'Minya';
+            else if (normQ.includes('سوهاج') || rawQ.includes('sohag')) targetGovKey = 'Sohag';
+            else if (normQ.includes('قنا') || rawQ.includes('qena')) targetGovKey = 'Qena';
+            else if (normQ.includes('اقصر') || normQ.includes('الأقصر') || rawQ.includes('luxor')) targetGovKey = 'Luxor';
+            else if (normQ.includes('اسوان') || normQ.includes('أسوان') || rawQ.includes('aswan')) targetGovKey = 'Aswan';
+            else if (normQ.includes('بني سويف') || normQ.includes('بنيسويف') || rawQ.includes('benisuef')) targetGovKey = 'BeniSuef';
+            else if (normQ.includes('فيوم') || normQ.includes('الفيوم') || rawQ.includes('fayoum')) targetGovKey = 'Fayoum';
+            else if (normQ.includes('اسيوط') || normQ.includes('أسيوط') || rawQ.includes('asyut')) targetGovKey = 'Asyut';
+
+            // 6. Agronomic & Technical Topics
             const isWheat = normQ.includes('قمح') || normQ.includes('سخا') || normQ.includes('مصر 3') || normQ.includes('سدس') || rawQ.includes('wheat') || rawQ.includes('sakha');
             const isCane = normQ.includes('قصب') || normQ.includes('بنجر') || normQ.includes('سكر') || normQ.includes('بديل') || rawQ.includes('sugar') || rawQ.includes('cane') || rawQ.includes('beet');
             const isPom = normQ.includes('رمان') || normQ.includes('منفلوط') || normQ.includes('بساتين') || rawQ.includes('pomegranate') || rawQ.includes('manfalut');
             const isWater = normQ.includes('ري') || normQ.includes('مياه') || normQ.includes('ترشيد') || normQ.includes('نقص') || normQ.includes('تنقيط') || normQ.includes('بخر') || normQ.includes('احتياج') || rawQ.includes('irrigation') || rawQ.includes('water') || rawQ.includes('deficit');
-            const isGovInfo = normQ.includes('اسيوط') || normQ.includes('المنيا') || normQ.includes('سوهاج') || normQ.includes('قنا') || normQ.includes('الاقصر') || normQ.includes('اسوان') || normQ.includes('بني سويف') || normQ.includes('الفيوم') || normQ.includes('تربه') || normQ.includes('محافظه') || rawQ.includes('asyut') || rawQ.includes('minya') || rawQ.includes('sohag') || rawQ.includes('qena') || rawQ.includes('luxor') || rawQ.includes('aswan') || rawQ.includes('benisuef') || rawQ.includes('fayoum') || rawQ.includes('soil');
 
             if (currentLang === 'en') {
-                if (isGreeting) {
+                if (isGovSwitch) {
+                    answer = `You can easily select or switch the target governorate by clicking the governorate buttons on the top query bar or clicking any marker on the satellite map.<br><br>The 8 governorates available in NileGuard are:<br>• Asyut · Minya · Sohag · Qena<br>• Luxor · Aswan · Beni Suef · Fayoum<br><br>Or type any governorate name here to view its climate data!`;
+                } else if (targetGovKey) {
+                    const gSt = appData.stations[targetGovKey];
+                    const gHorizonIdx = Math.min(currentHorizon - 1, gSt.forecast_series.length - 1);
+                    const gPdsi = gSt.forecast_series[gHorizonIdx];
+                    answer = `<strong>Agricultural Data for ${gSt.name_en}:</strong><br>• <strong>Predicted PDSI:</strong> <span dir="ltr">${gPdsi.toFixed(2)}</span><br>• <strong>Soil Type:</strong> ${gSt.soil_type_en}.<br>• <strong>Key Crops:</strong> ${gSt.primary_agriculture_en}.<br>• Recommend drip irrigation with supplemental potassium to mitigate heat stress.`;
+                } else if (isGreeting) {
                     answer = `Hello! Welcome to the <strong>NileGuard AI Platform</strong>.<br><br>I am your Agronomic Advisor for <strong>${st.name_en}</strong> (Predicted PDSI = ${pdsiVal.toFixed(2)}). How can I assist you today with crop recommendations or water management?`;
                 } else if (isThanks) {
                     answer = `You're very welcome! I am always here to assist you with agricultural guidance and water optimization across Upper Egypt.`;
@@ -1763,13 +1791,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                     answer = `<strong>Manfaluti Pomegranate in ${st.name_en}:</strong><br>• Water Quota: 2,800–3,200 m³/feddan.<br>• Apply organic mulching and early morning drip cycles to prevent fruit cracking.`;
                 } else if (isWater) {
                     answer = `<strong>Irrigation Action Plan for ${st.name_en} (PDSI = ${pdsiVal.toFixed(2)}):</strong><br>1. Night/early morning drip irrigation (cuts evaporation by 25%).<br>2. Regulated deficit irrigation during non-critical growth stages.<br>3. Pipeline conveyance instead of open ditches.`;
-                } else if (isGovInfo) {
-                    answer = `<strong>Agricultural Data for ${st.name_en}:</strong><br>• <strong>Predicted PDSI:</strong> ${pdsiVal.toFixed(2)}.<br>• <strong>Soil Type:</strong> ${st.soil_type_en}.<br>• <strong>Key Crops:</strong> ${st.primary_agriculture_en}.<br>• Recommend drip irrigation with supplemental potassium to mitigate heat stress.`;
                 } else {
                     answer = `I apologize, I am specialized strictly in agricultural advisories, irrigation management, and drought forecasting for Upper Egypt governorates. Please feel free to ask me about crop selection, water quotas, or drip irrigation methods!`;
                 }
             } else {
-                if (isGreeting) {
+                if (isGovSwitch) {
+                    answer = `يمكنك اختيار أو تغيير المحافظة المستهدفة بسهولة عبر الضغط على أزرار المحافظات في أعلى شاشة المراقبة، أو الضغط على أي موقع على خريطة الأقمار الصناعية.<br><br>المحافظات الـ 8 المتاحة حالياً بالمنظومة هي:<br>• <strong>أسيوط</strong> (الوسط والرمان)<br>• <strong>المنيا</strong> (القمح والبنجر)<br>• <strong>سوهاج</strong> (البصل والقمح)<br>• <strong>قنا</strong> (شتلات القصب المطور)<br>• <strong>الأقصر</strong> (الطماطم المجففة والنخيل)<br>• <strong>أسوان</strong> (الكركديه والنخيل والري بالتنقيط)<br>• <strong>بني سويف</strong> (القمح والمقننات المائية)<br>• <strong>الفيوم</strong> (التربة الرسوبية والأعشاب)<br><br>اكتب اسم أي محافظة هنا للاطلاع على بياناتها وتوصياتها الزراعية فوراً!`;
+                } else if (targetGovKey) {
+                    const gSt = appData.stations[targetGovKey];
+                    const gHorizonIdx = Math.min(currentHorizon - 1, gSt.forecast_series.length - 1);
+                    const gPdsi = gSt.forecast_series[gHorizonIdx];
+                    answer = `<strong>بيانات وتوصيات محافظة ${gSt.name_ar}:</strong><br>• <strong>مؤشر الجفاف المتوقع (PDSI):</strong> <span dir="ltr">${gPdsi.toFixed(2)}</span><br>• <strong>طبيعة التربة:</strong> ${gSt.soil_type_ar}<br>• <strong>المحاصيل الرئيسية:</strong> ${gSt.primary_agriculture_ar}<br>• <strong>التوصية المائية:</strong> الالتزام بتقنيات الري بالتنقيط والري الليلي مع الإضافة البوتاسية لزيادة مقاومة الإجهاد الحراري.`;
+                } else if (isGreeting) {
                     if (normQ.includes('ازيك') || normQ.includes('اخبارك')) {
                         answer = `الحمد لله، أنا بخير وفي خدمتك دائماً! أهلاً بك في منصة <strong>NileGuard</strong>. كيف يمكنني مساعدتك اليوم في شؤون الزراعة والري بمحافظة <strong>${st.name_ar}</strong>؟`;
                     } else {
@@ -1787,8 +1820,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     answer = `<strong>بساتين الرمان المنفلوطي بمحافظة ${st.name_ar}:</strong><br>• الاحتياج المائي: 2,800 - 3,200 م³/فدان.<br>• يوصى بالتغطية العضوية (Mulching) والري الفجري لتجنب تشقق الثمار.`;
                 } else if (isWater) {
                     answer = `<strong>خطة ترشيد مياه الري بمحافظة ${st.name_ar} (مؤشر بالمر = ${pdsiVal.toFixed(2)}):</strong><br>1. الري الليلي/الفجري لتقليل الفاقد بالتبخير بنسبة 25%.<br>2. تطبيق الري الناقص المنظم (RDI) في المراحل غير الحرجة.<br>3. التحول للأنبوب المبوب والري بالتنقيط.`;
-                } else if (isGovInfo) {
-                    answer = `<strong>بيانات محافظة ${st.name_ar}:</strong><br>• <strong>مؤشر الجفاف PDSI:</strong> ${pdsiVal.toFixed(2)}.<br>• <strong>طبيعة التربة:</strong> ${st.soil_type_ar}.<br>• <strong>المحاصيل الرئيسية:</strong> ${st.primary_agriculture_ar}.<br>• <strong>التوصية:</strong> الري بالتنقيط مع الإضافة البوتاسية لزيادة مقاومة الإجهاد الحراري.`;
                 } else {
                     answer = `أعتذر منك، أنا مساعد متخصص فقط في الاستشارات الزراعية وترشيد مياه الري ومتابعة مؤشرات الجفاف لمحافظات صعيد مصر.<br><br>يمكنك سؤالي عن الأصناف المحصولية المقاومة للجفاف، المقننات المائية المعتمدة، أو تقنيات الري بالتنقيط!`;
                 }
