@@ -1,5 +1,6 @@
 // ==========================================================================
-// NileGuard — Flagship Platform Core Engine
+// NileGuard v7 — Flagship Platform Core Engine (CNN-Transformer 4-Category AI)
+// Updated: 2026-08-25 — Shifting Horizon: Month +3, Month +6, Month +9
 // 4D Time Player, GeoJSON Heatmap Polygons, ROI Calculator, Voice Advisor, Bulletin
 // ==========================================================================
 

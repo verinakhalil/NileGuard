@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <!-- Main Stylesheet with cache busting -->
-    <link rel="stylesheet" href="styles.css?v=26.0">
+    <link rel="stylesheet" href="styles.css?v=27.0">
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="assets/nileguard_logo.jpg">
@@ -336,13 +336,11 @@
                                     <span class="label-caps">Spatial layer</span>
                                     <h2 id="txt-spatial-title">Drought severity — Arab Republic of Egypt</h2>
                                 </div>
-                                <div class="severity-legend">
-                                    <div class="legend-item"><span class="legend-dot dot-wet"></span> Wet</div>
-                                    <div class="legend-item"><span class="legend-dot dot-normal"></span> Normal</div>
-                                    <div class="legend-item"><span class="legend-dot dot-mild"></span> Mild</div>
-                                    <div class="legend-item"><span class="legend-dot dot-moderate"></span> Moderate</div>
-                                    <div class="legend-item"><span class="legend-dot dot-severe"></span> Severe</div>
-                                    <div class="legend-item"><span class="legend-dot dot-extreme"></span> Extreme</div>
+                                <div class="spatial-legend" style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                                    <div class="legend-item"><span class="legend-dot" style="background:#16a34a; display:inline-block; width:10px; height:10px; border-radius:50%;"></span> Cat 0: طبيعي / خفيف</div>
+                                    <div class="legend-item"><span class="legend-dot" style="background:#d97706; display:inline-block; width:10px; height:10px; border-radius:50%;"></span> Cat 1: جفاف متوسط</div>
+                                    <div class="legend-item"><span class="legend-dot" style="background:#ea580c; display:inline-block; width:10px; height:10px; border-radius:50%;"></span> Cat 2: جفاف شديد</div>
+                                    <div class="legend-item"><span class="legend-dot" style="background:#b91c1c; display:inline-block; width:10px; height:10px; border-radius:50%;"></span> Cat 3: جفاف حرج للغاية</div>
                                 </div>
                             </div>
 
@@ -354,7 +352,7 @@
                                 </button>
                                 <div class="player-slider-wrapper">
                                     <div style="display: flex; justify-content: space-between; font-size: 0.68rem; font-family: var(--font-mono); color: var(--forest-muted);">
-                                        <span id="disp-player-month">Horizon: Month +6 (1 Jun 2021)</span>
+                                        <span id="disp-player-month">Horizon: Month +6 (Jun 2026)</span>
                                         <span>1M .. 12M</span>
                                     </div>
                                     <input type="range" id="player-range" min="1" max="12" value="6" class="player-range-slider">
@@ -925,6 +923,6 @@
     </div>
 
     <!-- Application Script -->
-    <script src="app.js?v=36.0"></script>
+    <script src="app.js?v=37.0"></script>
 </body>
 </html>
